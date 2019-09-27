@@ -1,0 +1,9 @@
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\bin\Debug\TestWinAPI.exe.config
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\bin\Debug\TestWinAPI.exe
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\bin\Debug\TestWinAPI.pdb
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\obj\Debug\TestWinAPI.csprojAssemblyReference.cache
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\obj\Debug\TestWinAPI.MainForm.resources
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\obj\Debug\TestWinAPI.csproj.GenerateResource.cache
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\obj\Debug\TestWinAPI.csproj.CoreCompileInputs.cache
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\obj\Debug\TestWinAPI.exe
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestWinAPI\obj\Debug\TestWinAPI.pdb

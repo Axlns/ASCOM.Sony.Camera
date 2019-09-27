@@ -1,0 +1,7 @@
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\bin\Debug\TestShutterApp.exe.config
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\bin\Debug\TestShutterApp.exe
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\bin\Debug\TestShutterApp.pdb
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.csprojAssemblyReference.cache
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.csproj.CoreCompileInputs.cache
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.exe
+C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.pdb
