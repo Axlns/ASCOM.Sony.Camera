@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.DSLR.Sony", "ASCOM.DSLR.Sony\ASCOM.DSLR.Sony.csproj", "{64308775-BD4A-469C-BCAB-3ED830B811AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.DSLR.Sony.TestConsoleApp", "ASCOM.DSLR.Sony.TestConsoleApp\ASCOM.DSLR.Sony.TestConsoleApp.csproj", "{7EB042DB-F587-4323-9ED9-645CA53E9AF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64308775-BD4A-469C-BCAB-3ED830B811AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64308775-BD4A-469C-BCAB-3ED830B811AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64308775-BD4A-469C-BCAB-3ED830B811AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64308775-BD4A-469C-BCAB-3ED830B811AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EB042DB-F587-4323-9ED9-645CA53E9AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB042DB-F587-4323-9ED9-645CA53E9AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB042DB-F587-4323-9ED9-645CA53E9AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB042DB-F587-4323-9ED9-645CA53E9AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E85CECBC-9940-4427-B51B-8F508094E0B8}
+	EndGlobalSection
+EndGlobal

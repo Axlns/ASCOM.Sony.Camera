@@ -5,3 +5,8 @@ C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.csp
 C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.csproj.CoreCompileInputs.cache
 C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.exe
 C:\Projects\AEX\ASCOM.DSLR.SonyAlpha\TestShutterApp\obj\Debug\TestShutterApp.pdb
+C:\Projects\AEX\ascom.dslr.sony\examples\TestShutterApp\bin\Debug\TestShutterApp.exe.config
+C:\Projects\AEX\ascom.dslr.sony\examples\TestShutterApp\bin\Debug\TestShutterApp.exe
+C:\Projects\AEX\ascom.dslr.sony\examples\TestShutterApp\bin\Debug\TestShutterApp.pdb
+C:\Projects\AEX\ascom.dslr.sony\examples\TestShutterApp\obj\Debug\TestShutterApp.exe
+C:\Projects\AEX\ascom.dslr.sony\examples\TestShutterApp\obj\Debug\TestShutterApp.pdb
