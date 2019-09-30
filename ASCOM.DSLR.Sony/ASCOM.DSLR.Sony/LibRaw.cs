@@ -68,7 +68,10 @@ namespace ASCOM.DSLR.Sony
         public uint progress_flags;
         public uint process_warnings;
         public libraw_colordata_t color;
+        public libraw_imgother_t other;
+        public libraw_thumbnail_t thumbnail;
         public libraw_rawdata_t rawdata;
+        public IntPtr parent_class;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -488,7 +491,7 @@ namespace ASCOM.DSLR.Sony
     [StructLayout(LayoutKind.Sequential)]
     public struct libraw_raw_crop_t
     {
-        ushort cleft, ctop, cwidth, cheight;
+        public ushort cleft, ctop, cwidth, cheight;
     }
 
 
@@ -582,8 +585,6 @@ namespace ASCOM.DSLR.Sony
         float MinFocal, MaxFocal, MaxAp4MinFocal, MaxAp4MaxFocal;
     }
 
-
-
     [StructLayout(LayoutKind.Sequential)]
     public struct libraw_iparams_t
     {
@@ -651,7 +652,8 @@ namespace ASCOM.DSLR.Sony
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8 * 4)]
         public int[] mask;
-        libraw_raw_crop_t raw_crop;
+
+        public libraw_raw_crop_t raw_crop;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -681,4 +683,50 @@ namespace ASCOM.DSLR.Sony
         public libraw_internal_output_params_t ioparams;
         public libraw_colordata_t color;
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct libraw_imgother_t
+    {
+        float iso_speed;
+        float shutter;
+        float aperture;
+        float focal_len;
+        ulong timestamp;
+        uint shot_order;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] uint[] gpsdata;
+        libraw_gps_info_t parsed_gps;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] char[] desc;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] char[] artist;
+        float FlashEC;
+        float FlashGN;
+        float CameraTemperature;
+        float SensorTemperature;
+        float SensorTemperature2;
+        float LensTemperature;
+        float AmbientTemperature;
+        float BatteryTemperature;
+        float exifAmbientTemperature;
+        float exifHumidity;
+        float exifPressure;
+        float exifWaterDepth;
+        float exifAcceleration;
+        float exifCameraElevationAngle;
+        float real_ISO;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct libraw_gps_info_t
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)] float[] latitude;     /* Deg,min,sec */
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)] float[] longtitude;   /* Deg,min,sec */
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)] float[] gpstimestamp; /* Deg,min,sec */
+        float altitude;
+        private char altref;
+        private char latref;
+        private char longref;
+        private char gpsstatus;
+        char gpsparsed;
+    }
+    
+
 }

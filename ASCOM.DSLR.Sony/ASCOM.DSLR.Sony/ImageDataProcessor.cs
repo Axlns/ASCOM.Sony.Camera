@@ -31,7 +31,7 @@ namespace ASCOM.DSLR.Sony
             IntPtr data = LoadRaw(fileName);
 
             //CheckError(NativeMethods.libraw_raw2image(data), "raw2image");
-            CheckError(NativeMethods.libraw_dcraw_process(data), "dcraw_process");
+            //CheckError(NativeMethods.libraw_dcraw_process(data), "dcraw_process");
 
             var dataStructure = GetStructure<libraw_data_t>(data);
             ushort width = dataStructure.sizes.iwidth;
@@ -123,8 +123,8 @@ namespace ASCOM.DSLR.Sony
             if (colorsStr != "RGBG")
                 throw new NotImplementedException();
 
-            int xoffs = 0;
-            int yoffs = 0;
+            int xOffset = 0;
+            int yOffset = 0;
 
             string cameraPattern = "";
             cameraPattern += colorsStr[NativeMethods.libraw_COLOR(data, 0, 0)];
@@ -137,55 +137,38 @@ namespace ASCOM.DSLR.Sony
                 case "RGGB":
                     break;
                 case "GRBG":
-                    xoffs = 1;
+                    xOffset = 1;
                     break;
                 case "BGGR":
-                    xoffs = 1;
-                    yoffs = 1;
+                    xOffset = 1;
+                    yOffset = 1;
                     break;
                 case "GBRG":
-                    yoffs = 1;
+                    yOffset = 1;
                     break;
                 default:
                     throw new System.NotImplementedException();
             }
 
-            ushort width = dataStructure.sizes.iwidth;
-            ushort height = dataStructure.sizes.iheight;
+            
+            ushort rawWidth = dataStructure.rawdata.sizes.raw_width;
+            ushort width = dataStructure.rawdata.sizes.width;
+            ushort height = dataStructure.rawdata.sizes.height;
+            //ushort cropWidth = dataStructure.rawdata.sizes.raw_crop.cwidth;
+            //ushort cropHeight = dataStructure.rawdata.sizes.raw_crop.cheight;
 
             var pixels = new int[width, height];
 
-            for (int y = 0; y < height - yoffs; y++)
+            ushort* ptr = (ushort*)dataStructure.rawdata.raw_image.ToPointer();
+
+            for (int y = 0; y < height - yOffset; y++)
             {
-                int i0 = NativeMethods.libraw_COLOR(data, y,0);
-                int i1 = NativeMethods.libraw_COLOR(data, y,1);
-
-                
-                ushort* ptr = (ushort*) ((byte*)dataStructure.image.ToPointer() + width*8 * y);
-
-                for (int x = 0; x < width - xoffs; x+=2)
+                for (int x = 0; x < width - xOffset; x+=1)
                 {
-                    pixels[x + xoffs, y + yoffs] = *(ptr + i0);
-                    ptr += 4;
-                    pixels[x + xoffs+1, y + yoffs] = *(ptr + i1);
-                    ptr += 4;
+                    pixels[x + xOffset, y + yOffset] = *(ptr+ rawWidth * y+x);
                 }
             }
 
-            if (dataStructure.color.maximum > 0)
-            {
-                int multiplier = (int) Math.Pow(2, Math.Floor(Math.Log(32768.0 / dataStructure.color.maximum, 2)));
-                if (multiplier > 1)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        for (int x = 0; x < width; x++)
-                        {
-                            pixels[x, y] *= multiplier;
-                        }
-                    }
-                }
-            }
             NativeMethods.libraw_close(data);
 
             return pixels;
