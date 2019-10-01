@@ -74,5 +74,15 @@ namespace ASCOM.DSLR.Sony
         {
             _remoteApp.Connect();
         }
+
+        public void Disconnect()
+        {
+            _remoteApp.Disconnect();
+        }
+
+        public bool IsConnected()
+        {
+            return _remoteApp.IsConnected;
+        }
     }
 }

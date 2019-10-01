@@ -26,7 +26,7 @@ namespace ASCOM.DSLR.Sony
                 throw new Exception($"LibRaw error {errorCode} when {action}");
         }
 
-        public unsafe uint[,,] ReadAndDebayerRaw(string fileName)
+        public uint[,,] ReadAndDebayerRaw(string fileName)
         {
             IntPtr data = LoadRaw(fileName);
 
@@ -48,16 +48,16 @@ namespace ASCOM.DSLR.Sony
                 int row = rc / width;
                 int col = rc - width * row;
                 //int rowReversed = height - row - 1;
-                pixels[col, row, 0] = b;
+                pixels[col, row, 0] = r;
                 pixels[col, row, 1] = g;
-                pixels[col, row, 2] = r;
+                pixels[col, row, 2] = b;
             }
             NativeMethods.libraw_close(data);
 
             return pixels;
         }
 
-        public uint[,,] ReadJpeg(string fileName)
+        public byte[,,] ReadJpeg(string fileName)
         {
             using (Bitmap img = new Bitmap(fileName))
             {
@@ -74,12 +74,12 @@ namespace ASCOM.DSLR.Sony
         }
 
         
-        public uint[,,] ReadBitmap(Bitmap img)
+        public byte[,,] ReadBitmap(Bitmap img)
         {
             BitmapData data = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, img.PixelFormat);
             IntPtr ptr = data.Scan0;
             int bytesCount = Math.Abs(data.Stride) * img.Height;
-            var result = new uint[img.Width, img.Height, 3];
+            var result = new byte[img.Width, img.Height, 3];
 
             byte[] bytesArray = new byte[bytesCount];
             Marshal.Copy(ptr, bytesArray, 0, bytesCount);
@@ -98,9 +98,9 @@ namespace ASCOM.DSLR.Sony
                 int col = rc - width * row;
 
                 //var rowReversed = height - row - 1;
-                result[col, row, 0] = b;
+                result[col, row, 0] = r;
                 result[col, row, 1] = g;
-                result[col, row, 2] = r;
+                result[col, row, 2] = b;
             }
 
             return result;
@@ -217,8 +217,8 @@ namespace ASCOM.DSLR.Sony
                 xLength = Math.Min(xLength, NumX);
                 yLength = Math.Min(yLength, NumY);
 
-                result = rank == 3 ? (Array) new uint[xLength, yLength, 3] 
-                                   : (Array) new uint[xLength, yLength];
+                result = rank == 3 ? (Array) new ushort[xLength, yLength, 3] 
+                                   : (Array) new ushort[xLength, yLength];
 
                 for (int x = 0; x < xLength; x++)
                 { 

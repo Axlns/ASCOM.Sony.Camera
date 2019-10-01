@@ -111,8 +111,8 @@ namespace ASCOM.DSLR.Sony
                 try
                 {
                     cameraImageArray = _imageDataProcessor.CutArray(e.ImageArray, StartX, StartY, NumX, NumY, CameraXSize, CameraYSize);
-                    _cameraState = CameraStates.cameraIdle;
                     cameraImageReady = true;
+                    _cameraState = CameraStates.cameraIdle;
                 }
                 catch (Exception ex)
                 {
