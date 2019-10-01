@@ -26,18 +26,18 @@ namespace ASCOM.DSLR.Sony
                 throw new Exception($"LibRaw error {errorCode} when {action}");
         }
 
-        public int[,,] ReadAndDebayerRaw(string fileName)
+        public unsafe uint[,,] ReadAndDebayerRaw(string fileName)
         {
             IntPtr data = LoadRaw(fileName);
 
             //CheckError(NativeMethods.libraw_raw2image(data), "raw2image");
-            //CheckError(NativeMethods.libraw_dcraw_process(data), "dcraw_process");
+            CheckError(NativeMethods.libraw_dcraw_process(data), "dcraw_process");
 
             var dataStructure = GetStructure<libraw_data_t>(data);
             ushort width = dataStructure.sizes.iwidth;
             ushort height = dataStructure.sizes.iheight;
 
-            var pixels = new int[width, height, 3];
+            var pixels = new uint[width, height, 3];
 
             for (int rc = 0; rc < height * width; rc++)
             {
@@ -57,7 +57,7 @@ namespace ASCOM.DSLR.Sony
             return pixels;
         }
 
-        public int[,,] ReadJpeg(string fileName)
+        public uint[,,] ReadJpeg(string fileName)
         {
             using (Bitmap img = new Bitmap(fileName))
             {
@@ -74,13 +74,12 @@ namespace ASCOM.DSLR.Sony
         }
 
         
-        public int[,,] ReadBitmap(Bitmap img)
+        public uint[,,] ReadBitmap(Bitmap img)
         {
-           
             BitmapData data = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, img.PixelFormat);
             IntPtr ptr = data.Scan0;
             int bytesCount = Math.Abs(data.Stride) * img.Height;
-            var result = new int[img.Width, img.Height, 3];
+            var result = new uint[img.Width, img.Height, 3];
 
             byte[] bytesArray = new byte[bytesCount];
             Marshal.Copy(ptr, bytesArray, 0, bytesCount);
@@ -112,7 +111,7 @@ namespace ASCOM.DSLR.Sony
 
         }
 
-        public unsafe int[,] ReadRaw(string fileName)
+        public unsafe uint[,] ReadRaw(string fileName)
         {
             IntPtr data = LoadRaw(fileName);
 
@@ -157,7 +156,7 @@ namespace ASCOM.DSLR.Sony
             //ushort cropWidth = dataStructure.rawdata.sizes.raw_crop.cwidth;
             //ushort cropHeight = dataStructure.rawdata.sizes.raw_crop.cheight;
 
-            var pixels = new int[width, height];
+            var pixels = new uint[width, height];
 
             ushort* ptr = (ushort*)dataStructure.rawdata.raw_image.ToPointer();
 
@@ -215,13 +214,14 @@ namespace ASCOM.DSLR.Sony
                 int startXCorrected = StartX % 2 == 0 ? StartX : StartX - 1;
                 int startYCorrected = StartY % 2 == 0 ? StartY : StartY - 1;
 
-                result = rank == 3 ? Array.CreateInstance(typeof(int), NumX, NumY, 3)
-                                   : Array.CreateInstance(typeof(int), NumX, NumY);
-
                 xLength = Math.Min(xLength, NumX);
                 yLength = Math.Min(yLength, NumY);
 
+                result = rank == 3 ? (Array) new uint[xLength, yLength, 3] 
+                                   : (Array) new uint[xLength, yLength];
+
                 for (int x = 0; x < xLength; x++)
+                { 
                     for (int y = 0; y < yLength; y++)
                     {
                         int dataX = startXCorrected + x;
@@ -238,6 +238,7 @@ namespace ASCOM.DSLR.Sony
                             result.SetValue(data.GetValue(dataX, dataY), x, y);
                         }
                     }
+                }
             }
             else
             {

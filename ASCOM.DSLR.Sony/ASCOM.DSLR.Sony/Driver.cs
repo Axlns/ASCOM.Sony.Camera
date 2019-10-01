@@ -85,6 +85,7 @@ namespace ASCOM.DSLR.Sony
         internal static CameraModel cameraModel;
         internal static short iso;
         internal static ImageFormat imageFormat;
+        
         internal static bool autoDeleteImageFile;
 
         /// <summary>
@@ -367,9 +368,6 @@ namespace ASCOM.DSLR.Sony
                     cameraModel = CameraModel.Models.FirstOrDefault(m => m.ID == cameraModelID) ?? cameraModelDefault;
                 }
 
-                cameraNumX = cameraModel.SensorWidth;
-                cameraNumY = cameraModel.SensorHeight;
-
                 string isoAsString = driverProfile.GetValue(driverID, isoProfileName, string.Empty, cameraModel.Gains.First().ToString());
                 iso = short.Parse(isoAsString);
                 Gain = (short) Array.IndexOf(Gains.ToArray(), iso);
@@ -377,6 +375,9 @@ namespace ASCOM.DSLR.Sony
                 imageFormat = (ImageFormat) Enum.Parse(typeof(ImageFormat), driverProfile.GetValue(driverID, imageFormatProfileName, string.Empty, ImageFormat.CFA.ToString()));
                 autoDeleteImageFile = Boolean.Parse(driverProfile.GetValue(driverID,autoDeleteImageFileProfileName, string.Empty,false.ToString()));
 
+
+                cameraNumX = cameraModel.SensorSize.GetReadoutWidth(imageFormat);
+                cameraNumY = cameraModel.SensorSize.GetReadoutHeight(imageFormat);
             }
         }
 

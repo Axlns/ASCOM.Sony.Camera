@@ -419,10 +419,10 @@ namespace ASCOM.DSLR.Sony
             }
         }
 
-        private void SetShutterSpeed(double durationSeconds)
+        private void SetShutterSpeed(double durationSeconds, double minDurationForBulbMode)
         {
             string shutterSpeed;
-            if (durationSeconds < 1)
+            if (durationSeconds < minDurationForBulbMode)
             {
                 shutterSpeed =
                     (_cameraModel.ShutterSpeeds.Where(ss => ss.DurationSeconds <= durationSeconds)
@@ -467,7 +467,7 @@ namespace ASCOM.DSLR.Sony
             }
         }
 
-        public void StartExposure(short iso, double durationSeconds)
+        public void StartExposure(short iso, double durationSeconds, double minDurationForBulbMode)
         {
 
             if (IsConnected == false)
@@ -485,7 +485,7 @@ namespace ASCOM.DSLR.Sony
             _exposureBackgroundWorker.DoWork += new DoWorkEventHandler( ((sender, args) =>
             {
 
-                SetShutterSpeed(durationSeconds);
+                SetShutterSpeed(durationSeconds, minDurationForBulbMode);
                 SetISO(iso);
                 SyncSaveFolder();
 
@@ -494,14 +494,14 @@ namespace ASCOM.DSLR.Sony
                     try
                     {
                         BeginExposure();
-                        if (durationSeconds >= 1)
+                        if (durationSeconds >= minDurationForBulbMode)
                         {
                             Thread.Sleep((int)(durationSeconds * 1000));
                         }
 
                         if (args.Cancel == false)
                         {
-                            EndExposure(durationSeconds >= 1); //we dont call EndExposure in case if background worker cancelled as we assume it has been already ended
+                            EndExposure(durationSeconds >= minDurationForBulbMode); //we dont call EndExposure in case if background worker cancelled as we assume it has been already ended
                             _fileSystemWatcher.EnableRaisingEvents = true;
                         }
                     }

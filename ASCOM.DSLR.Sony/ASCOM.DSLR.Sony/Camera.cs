@@ -54,11 +54,16 @@ namespace ASCOM.DSLR.Sony
         {
             CheckConnected("Camera not connected");
 
+            //todo: add code to avoid possible race condition which could theoretically happen if client application calls StartExposure and then immediately disconnects from camera; so checkConnected above passes but access to _sonlyCamera below would throw NullReferenceException
+
             if (Duration < 0.0) throw new InvalidValueException("StartExposure", Duration.ToString(), "0.0 upwards");
-            if (cameraNumX > cameraModel.SensorWidth) throw new InvalidValueException("StartExposure", cameraNumX.ToString(), cameraModel.SensorWidth.ToString());
-            if (cameraNumY > cameraModel.SensorHeight) throw new InvalidValueException("StartExposure", cameraNumY.ToString(), cameraModel.SensorHeight.ToString());
-            if (cameraStartX > cameraModel.SensorWidth) throw new InvalidValueException("StartExposure", cameraStartX.ToString(), cameraModel.SensorWidth.ToString());
-            if (cameraStartY > cameraModel.SensorHeight) throw new InvalidValueException("StartExposure", cameraStartY.ToString(), cameraModel.SensorHeight.ToString());
+            ushort readoutWidth = cameraModel.SensorSize.GetReadoutWidth(imageFormat);
+            ushort readoutHeight = cameraModel.SensorSize.GetReadoutHeight(imageFormat);
+
+            if (cameraNumX > readoutWidth) throw new InvalidValueException("StartExposure", cameraNumX.ToString(), readoutWidth.ToString());
+            if (cameraNumY > readoutHeight) throw new InvalidValueException("StartExposure", cameraNumY.ToString(), readoutHeight.ToString());
+            if (cameraStartX > readoutWidth) throw new InvalidValueException("StartExposure", cameraStartX.ToString(), readoutWidth.ToString());
+            if (cameraStartY > readoutHeight) throw new InvalidValueException("StartExposure", cameraStartY.ToString(), readoutHeight.ToString());
 
             if (_cameraState != CameraStates.cameraIdle) throw new InvalidOperationException("Cannot start exposure - camera is not idle");
 
@@ -82,14 +87,23 @@ namespace ASCOM.DSLR.Sony
 
         private void UnsubscribeCameraEvents()
         {
-            _sonyCamera.ExposureCompleted -= _sonyCamera_ExposureCompleted;
-            _sonyCamera.ExposureReady -= _sonyCamera_ExposureReady;
+            if (_sonyCamera != null)
+            {
+                _sonyCamera.ExposureCompleted -= _sonyCamera_ExposureCompleted;
+                _sonyCamera.ExposureReady -= _sonyCamera_ExposureReady;
+            }
         }
 
         private void _sonyCamera_ExposureReady(object sender, ExposureReadyEventArgs e)
         {
             tl.LogMessage("_sonyCamera_ExposureReady", string.Format("ImageArray Length: {0}",e.ImageArray.Length));
 
+            if (IsConnected == false)
+            {
+                _cameraState = CameraStates.cameraIdle;
+                return;
+            }
+            
             _cameraState = CameraStates.cameraDownload;
 
             try
@@ -110,7 +124,6 @@ namespace ASCOM.DSLR.Sony
             {
                 UnsubscribeCameraEvents();
             }
-            
         }
 
         private void _sonyCamera_ExposureCompleted(object sender, ExposureCompletedEventArgs e)
@@ -201,7 +214,7 @@ namespace ASCOM.DSLR.Sony
         private DateTime exposureStart = DateTime.MinValue;
         private double cameraLastExposureDuration = 0.0;
         private bool cameraImageReady = false;
-        private Array cameraImageArray;
+        private Array cameraImageArray; //sony interop component will return it as UInt16, needs to be converted to Int32 before returned to driver users
         private object[,] cameraImageArrayVariant;
         private short _binX = 1;
         private short _binY = 1;
@@ -275,8 +288,10 @@ namespace ASCOM.DSLR.Sony
         {
             get
             {
-                tl.LogMessage("CameraXSize Get", cameraModel.SensorWidth.ToString());
-                return cameraModel.SensorWidth;
+                ushort readoutWidth = cameraModel.SensorSize.GetReadoutWidth(imageFormat);
+                
+                tl.LogMessage("CameraXSize Get", readoutWidth.ToString());
+                return readoutWidth;
             }
         }
 
@@ -284,8 +299,9 @@ namespace ASCOM.DSLR.Sony
         {
             get
             {
-                tl.LogMessage("CameraYSize Get", cameraModel.SensorHeight.ToString());
-                return cameraModel.SensorHeight;
+                ushort readoutHeight = cameraModel.SensorSize.GetReadoutHeight(imageFormat);
+                tl.LogMessage("CameraYSize Get", readoutHeight.ToString());
+                return readoutHeight;
             }
         }
 
@@ -416,11 +432,13 @@ namespace ASCOM.DSLR.Sony
             get
             {
                 tl.LogMessage("FastReadout Get", "Not implemented");
+                CheckConnected("Not Connected");
                 throw new ASCOM.PropertyNotImplementedException("FastReadout", false);
             }
             set
             {
                 tl.LogMessage("FastReadout Set", "Not implemented");
+                CheckConnected("Not Connected");
                 throw new ASCOM.PropertyNotImplementedException("FastReadout", true);
             }
         }
@@ -494,7 +512,7 @@ namespace ASCOM.DSLR.Sony
             }
         }
 
-        public object ImageArray
+        public unsafe object ImageArray
         {
             get
             {
@@ -575,6 +593,20 @@ namespace ASCOM.DSLR.Sony
             {
                 int maxADU = short.MaxValue;
                 tl.LogMessage("MaxADU Get", maxADU.ToString());
+
+                switch (imageFormat)
+                {
+                    case ImageFormat.CFA:
+                    case ImageFormat.Debayered:
+                        maxADU = short.MaxValue;
+                        break;
+                    case ImageFormat.JPG:
+                        maxADU = byte.MaxValue;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
                 return maxADU;
             }
         }
@@ -685,13 +717,13 @@ namespace ASCOM.DSLR.Sony
         {
             get
             {
-                tl.LogMessage("ReadoutMode Get", "Not implemented");
-                throw new ASCOM.PropertyNotImplementedException("ReadoutMode", false);
+                tl.LogMessage("ReadoutMode Get", $"{(short)ReadoutModes.IndexOf(imageFormat.ToString())} {imageFormat.ToString()}");
+                return (short)ReadoutModes.IndexOf(imageFormat.ToString());
             }
             set
             {
-                tl.LogMessage("ReadoutMode Set", "Not implemented");
-                throw new ASCOM.PropertyNotImplementedException("ReadoutMode", true);
+                tl.LogMessage("ReadoutMode Set", value.ToString());
+                imageFormat = (ImageFormat) Enum.Parse(typeof(ImageFormat), (string) ReadoutModes[value], true);
             }
         }
 
@@ -700,7 +732,7 @@ namespace ASCOM.DSLR.Sony
             get
             {
                 tl.LogMessage("ReadoutModes Get", "Not implemented");
-                throw new ASCOM.PropertyNotImplementedException("ReadoutModes", false);
+                return new ArrayList(new [] { ImageFormat.CFA.ToString(), ImageFormat.Debayered.ToString(), ImageFormat.JPG.ToString() });
             }
         }
 
@@ -708,8 +740,8 @@ namespace ASCOM.DSLR.Sony
         {
             get
             {
-                tl.LogMessage("SensorName Get", "Not implemented");
-                throw new ASCOM.PropertyNotImplementedException("SensorName", false);
+                tl.LogMessage("SensorName Get", cameraModel.SensorName);
+                return cameraModel.SensorName;
             }
         }
 
@@ -718,7 +750,17 @@ namespace ASCOM.DSLR.Sony
             get
             {
                 tl.LogMessage("SensorType Get", SensorType.RGGB.ToString());
-                return SensorType.RGGB;
+                switch (imageFormat)
+                {
+                    case ImageFormat.CFA:
+                        return SensorType.RGGB;
+                    case ImageFormat.Debayered:
+                    case ImageFormat.JPG:
+                        return SensorType.Color;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
             }
         }
 

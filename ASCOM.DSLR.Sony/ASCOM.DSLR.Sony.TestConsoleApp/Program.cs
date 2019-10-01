@@ -14,39 +14,26 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
     {
         static void Main(string[] args)
         {
-            //SonyCamera camera = new SonyCamera(CameraModel.Models.First(m=>m.ID=="SLTA99"), ImageFormat.CFA, false);
-            
-            //camera.ExposureReady += Camera_ExposureReady;
-            //camera.ExposureCompleted += Camera_ExposureCompleted;
+            SonyCamera camera = new SonyCamera(CameraModel.Models.First(m => m.ID == "SLTA99"), ImageFormat.CFA, false);
 
-            //camera.Connect();
+            camera.ExposureReady += Camera_ExposureReady;
+            camera.ExposureCompleted += Camera_ExposureCompleted;
 
-            //Console.WriteLine("Press S to take exposure. Press E to exit program.");
-            //do
-            //{
-            //    var key = Console.ReadKey();
-            //    if (key.Key == ConsoleKey.S)
-            //    {
-            //        camera.StartExposure(400, 2, true);
-            //    }
-            //    else if (key.Key == ConsoleKey.E)
-            //    {
-            //        break;
-            //    }
-            //} while (true);
+            camera.Connect();
 
-            ImageDataProcessor dataProcessor = new ImageDataProcessor();
-
-            var array = dataProcessor.ReadRaw("D:\\astrophoto\\test\\DSC08256.ARW");
-
-            Console.WriteLine(array.LongLength);
-
-            Console.WriteLine("Saving to tiff...");
-            SaveToTiff("D:\\astrophoto\\test\\test.tiff",array);
-
-            Console.WriteLine("Completed. Prease any key to exit.");
-            Console.ReadKey(true);
-            //D:\astrophoto\test\FLAT_M81_00479.ARW
+            Console.WriteLine("Press S to take exposure. Press E to exit program.");
+            do
+            {
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.S)
+                {
+                    camera.StartExposure(400, 3, true);
+                }
+                else if (key.Key == ConsoleKey.E)
+                {
+                    break;
+                }
+            } while (true);
         }
 
         private static void Camera_ExposureCompleted(object sender, ExposureCompletedEventArgs e)
@@ -56,8 +43,30 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
 
         private static void Camera_ExposureReady(object sender, ExposureReadyEventArgs e)
         {
-            Console.WriteLine("Exposure completed. Image array length : {0}",e.ImageArray.Length);
+            var array = (int[,]) e.ImageArray;
+
+            int width = array.GetLength(0);
+            int height = array.GetLength(1);
+
+            var flatArray = new int[width*height];
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    flatArray[j * width + i] = array[i, j];
+                }
+            }
+
+            Console.WriteLine($"Image array length: {array.LongLength}");
+            Console.WriteLine($"Image dimensions: {width}x{height}");
+            Console.WriteLine($"ADU max/min: {flatArray.Min()}/{flatArray.Max()}");
+
+            Console.WriteLine("Saving to tiff...");
+            SaveToTiff("F:\\astrophoto\\~test\\test.tiff", array);
+
         }
+
 
         private static void SaveToTiff(string filename, int[,] imageArray)
         {
@@ -69,16 +78,16 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
             int width = imageArray.GetLength(0);
             int height = imageArray.GetLength(1);
 
-            var array = new ushort[width*height];
+            var array = new ushort[width * height];
 
             for (int i = 0; i < width; i++)
             {
-                for (int j=0; j < height; j++)
+                for (int j = 0; j < height; j++)
                 {
-                    array[j*width + i] = (ushort)imageArray[i, j];
+                    array[j * width + i] = (ushort)imageArray[i, j];
                 }
             }
-            
+
             var bitmapSrc = BitmapSource.Create(width, height, 96, 96, PixelFormats.Gray16, null, array, 4 * ((width * 2 + 3) / 4));
            
             using (var fs = File.OpenWrite(filename))

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using ASCOM.Utilities;
 
 namespace ASCOM.DSLR.Sony
 {
@@ -16,14 +18,74 @@ namespace ASCOM.DSLR.Sony
         }
     }
 
+    public class SensorSize
+    {
+        /// <summary>
+        /// Total sensor width in pixels (including reserved sensor areas)
+        /// </summary>
+        public ushort RawWidth { get; set; }
+        /// <summary>
+        /// Total sensor height in pixels (including reserved sensor areas)
+        /// </summary>
+        public ushort RawHeight { get; set; }
+
+        /// <summary>
+        /// Usable sensor width in pixels
+        /// </summary>
+        public ushort FrameWidth { get; set; }
+
+        /// <summary>
+        /// Usable sensor height in pixels
+        /// </summary>
+        public ushort FrameHeight { get; set; }
+
+        /// <summary>
+        /// Camera crop width (used for JPG files)
+        /// </summary>
+        public ushort CropWidth { get; set; }
+        /// <summary>
+        /// Camera crop height (used for JPG files)
+        /// </summary>
+        public ushort CropHeight { get; set; }
+
+        public ushort GetReadoutWidth(ImageFormat imageFormat)
+        {
+            switch (imageFormat)
+            {
+                case ImageFormat.CFA:
+                case ImageFormat.Debayered:
+                    return FrameWidth;
+                case ImageFormat.JPG:
+                    return CropWidth;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(imageFormat), imageFormat, null);
+            }
+        }
+
+        public ushort GetReadoutHeight(ImageFormat imageFormat)
+        {
+            switch (imageFormat)
+            {
+                case ImageFormat.CFA:
+                case ImageFormat.Debayered:
+                    return FrameHeight;
+                case ImageFormat.JPG:
+                    return CropHeight;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(imageFormat), imageFormat, null);
+            }
+        }
+
+    }
+
     public class CameraModel
     {
         public string ID { get; private set; }
         public string Name { get; private set; }
 
         public string SensorName { get; private set; }
-        public int SensorWidth { get; private set; }
-        public int SensorHeight { get; private set; }
+        public SensorSize SensorSize { get; private set; }
+        
         public double PixelSize { get; private set; }
 
         public double ExposureMin { get; private set; }
@@ -49,8 +111,15 @@ namespace ASCOM.DSLR.Sony
                     ID="SLTA99",
                     Name="Sony SLT-A99",
                     SensorName= "IMX157",
-                    SensorWidth= 6018,
-                    SensorHeight = 4024,
+                    SensorSize = new SensorSize()
+                    {
+                        RawWidth = 6048,
+                        RawHeight = 4024,
+                        FrameWidth = 6018,
+                        FrameHeight = 4024,
+                        CropWidth = 6000,
+                        CropHeight = 4000
+                    },
                     PixelSize=5.93,
                     ExposureMin = 1.0 / 8000,
                     ExposureMax = 3600,
@@ -96,11 +165,14 @@ namespace ASCOM.DSLR.Sony
                         new ShutterSpeed("0.5\"", durationSeconds:0.5),
                         new ShutterSpeed("0.6\"", durationSeconds:0.6),
                         new ShutterSpeed("0.8\"", durationSeconds:0.8),
-                        new ShutterSpeed("BULB", durationSeconds:1),
+                        new ShutterSpeed("1\"", durationSeconds:1.0),
+                        new ShutterSpeed("1.3\"", durationSeconds:1.3),
+                        new ShutterSpeed("1.6\"", durationSeconds:1.6),
+                        new ShutterSpeed("BULB", durationSeconds:2),
                     },
                     ElectronsPerADU = 1,
                     ExposureResolution = 0.1,
-                    HasShutter = true,
+                    HasShutter = false,
                     FullWellCapacity = short.MaxValue
                 };
             }
