@@ -1,10 +1,21 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.Sony.Camera", "ASCOM.Sony\ASCOM.Sony.Camera.csproj", "{64308775-BD4A-469C-BCAB-3ED830B811AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.Sony.TestConsoleApp", "ASCOM.Sony.TestConsoleApp\ASCOM.Sony.TestConsoleApp.csproj", "{7EB042DB-F587-4323-9ED9-645CA53E9AF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C8AAB0A-AB95-42F8-B12F-2C0D193A2048}"
+	ProjectSection(SolutionItems) = preProject
+		ASCOM.Sony.Camera.Setup.iss = ASCOM.Sony.Camera.Setup.iss
+		build.bat = build.bat
+		buildAndInstall.bat = buildAndInstall.bat
+		LICENSE = LICENSE
+		README.md = README.md
+		readme.txt = readme.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
