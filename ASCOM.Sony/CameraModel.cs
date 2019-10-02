@@ -18,8 +18,21 @@ namespace ASCOM.Sony
         }
     }
 
-    public class SensorSize
+    public class Sensor
     {
+
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Sensor width in millimeters
+        /// </summary>
+        public double Width { get; set; }
+
+        /// <summary>
+        /// Sensor height in millimeters
+        /// </summary>
+        public double Height { get; set; }
+
         ///// <summary>
         ///// Total sensor width in pixels (including reserved sensor areas)
         ///// </summary>
@@ -47,6 +60,9 @@ namespace ASCOM.Sony
         /// Camera crop height (used for JPG files)
         /// </summary>
         public ushort CropHeight { get; set; }
+
+        public double PixelSizeWidth { get; set; }
+        public double PixelSizeHeight { get; set; }
 
         public ushort GetReadoutWidth(ImageFormat imageFormat)
         {
@@ -83,10 +99,10 @@ namespace ASCOM.Sony
         public string ID { get; private set; }
         public string Name { get; private set; }
 
-        public string SensorName { get; private set; }
-        public SensorSize SensorSize { get; private set; }
         
-        public double PixelSize { get; private set; }
+        public Sensor Sensor { get; private set; }
+        
+    
 
         public double ExposureMin { get; private set; }
 
@@ -110,17 +126,19 @@ namespace ASCOM.Sony
                 {
                     ID="SLTA99",
                     Name="Sony SLT-A99",
-                    SensorName= "IMX157",
-                    SensorSize = new SensorSize()
+                    
+                    Sensor = new Sensor()
                     {
+                        Name = "IMX157",
                         //RawWidth = 6048,
                         //RawHeight = 4024,
                         FrameWidth = 6018,
                         FrameHeight = 4024,
                         CropWidth = 6000,
-                        CropHeight = 4000
+                        CropHeight = 4000,
+                        PixelSizeWidth = 5.93,
+                        PixelSizeHeight = 5.93
                     },
-                    PixelSize=5.93,
                     ExposureMin = 1.0 / 8000,
                     ExposureMax = 3600,
                     Exposures = new[] { 1.0/8000,},

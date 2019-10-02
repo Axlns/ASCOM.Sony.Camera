@@ -57,8 +57,8 @@ namespace ASCOM.Sony
             //todo: add code to avoid possible race condition which could theoretically happen if client application calls StartExposure and then immediately disconnects from camera; so checkConnected above passes but access to _sonlyCamera below would throw NullReferenceException
 
             if (Duration < 0.0) throw new InvalidValueException("StartExposure", Duration.ToString(), "0.0 upwards");
-            ushort readoutWidth = cameraModel.SensorSize.GetReadoutWidth(imageFormat);
-            ushort readoutHeight = cameraModel.SensorSize.GetReadoutHeight(imageFormat);
+            ushort readoutWidth = cameraModel.Sensor.GetReadoutWidth(imageFormat);
+            ushort readoutHeight = cameraModel.Sensor.GetReadoutHeight(imageFormat);
 
             if (cameraNumX > readoutWidth) throw new InvalidValueException("StartExposure", cameraNumX.ToString(), readoutWidth.ToString());
             if (cameraNumY > readoutHeight) throw new InvalidValueException("StartExposure", cameraNumY.ToString(), readoutHeight.ToString());
@@ -288,7 +288,7 @@ namespace ASCOM.Sony
         {
             get
             {
-                ushort readoutWidth = cameraModel.SensorSize.GetReadoutWidth(imageFormat);
+                ushort readoutWidth = cameraModel.Sensor.GetReadoutWidth(imageFormat);
                 
                 tl.LogMessage("CameraXSize Get", readoutWidth.ToString());
                 return readoutWidth;
@@ -299,7 +299,7 @@ namespace ASCOM.Sony
         {
             get
             {
-                ushort readoutHeight = cameraModel.SensorSize.GetReadoutHeight(imageFormat);
+                ushort readoutHeight = cameraModel.Sensor.GetReadoutHeight(imageFormat);
                 tl.LogMessage("CameraYSize Get", readoutHeight.ToString());
                 return readoutHeight;
             }
@@ -695,7 +695,7 @@ namespace ASCOM.Sony
         {
             get
             {
-                return cameraModel.PixelSize*BinX;
+                return cameraModel.Sensor.PixelSizeWidth*BinX;
             }
         }
 
@@ -703,7 +703,7 @@ namespace ASCOM.Sony
         {
             get
             {
-                return cameraModel.PixelSize*BinY;
+                return cameraModel.Sensor.PixelSizeHeight*BinY;
             }
         }
 
@@ -740,8 +740,8 @@ namespace ASCOM.Sony
         {
             get
             {
-                tl.LogMessage("SensorName Get", cameraModel.SensorName);
-                return cameraModel.SensorName;
+                tl.LogMessage("SensorName Get", cameraModel.Sensor.Name);
+                return cameraModel.Sensor.Name;
             }
         }
 

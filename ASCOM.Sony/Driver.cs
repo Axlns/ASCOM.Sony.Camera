@@ -368,8 +368,8 @@ namespace ASCOM.Sony
                 autoDeleteImageFile = Boolean.Parse(driverProfile.GetValue(driverID,autoDeleteImageFileProfileName, string.Empty,false.ToString()));
 
 
-                cameraNumX = cameraModel.SensorSize.GetReadoutWidth(imageFormat);
-                cameraNumY = cameraModel.SensorSize.GetReadoutHeight(imageFormat);
+                cameraNumX = cameraModel.Sensor.GetReadoutWidth(imageFormat);
+                cameraNumY = cameraModel.Sensor.GetReadoutHeight(imageFormat);
             }
         }
 

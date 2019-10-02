@@ -54,17 +54,15 @@ namespace ASCOM.Sony
             }
         }
 
+        private CameraModel _cameraModel;
+
         private void InitUI()
         {
-            cbCameraModel.Items.Clear();
-            cbCameraModel.Items.AddRange(CameraModel.Models.Select(m=>(object)m).ToArray());
-            cbCameraModel.DisplayMember = "Name";
-            cbCameraModel.SelectedItem = Camera.cameraModel;
-
+            _cameraModel = Camera.cameraModel;
             chkTrace.Checked = Camera.tl.Enabled;
-            
+
             cbImageFormat.Items.Clear();
-            cbImageFormat.Items.AddRange(new []
+            cbImageFormat.Items.AddRange(new[]
             {
                 (object)ImageFormat.CFA,
                 ImageFormat.Debayered,
@@ -72,14 +70,43 @@ namespace ASCOM.Sony
             });
             cbImageFormat.SelectedItem = Camera.imageFormat;
 
+            checkAutoDeleteFile.Checked = Camera.autoDeleteImageFile;
+
+            cbCameraModel.Items.Clear();
+            cbCameraModel.Items.AddRange(CameraModel.Models.Select(m=>(object)m).ToArray());
+            cbCameraModel.DisplayMember = "Name";
+            if (string.IsNullOrEmpty(_cameraModel.ID) == false)
+            {
+                cbCameraModel.SelectedItem = _cameraModel;
+            }
+            
             cbISO.Items.Clear();
-            if (Camera.cameraModel != null)
+            if (_cameraModel != null)
             {
                 cbISO.Items.AddRange(Camera.cameraModel.Gains.Select(iso=>(object)iso).ToArray());
                 cbISO.SelectedItem = Camera.iso;
+
+                txtCameraModel.Text = _cameraModel.Name;
+                txtSensorName.Text = _cameraModel.Sensor.Name;
+                txtSensorSizeWidth.Text = _cameraModel.Sensor.Width.ToString();
+                txtSensorSizeHeight.Text = _cameraModel.Sensor.Height.ToString();
+                txtFrameSizeWidth.Text = _cameraModel.Sensor.FrameWidth.ToString();
+                txtFrameSizeHeight.Text = _cameraModel.Sensor.FrameHeight.ToString();
+                txtCropSizeWidth.Text = _cameraModel.Sensor.CropWidth.ToString();
+                txtCropSizeHeight.Text = _cameraModel.Sensor.CropHeight.ToString();
+                txtPixelSizeWidth.Text = _cameraModel.Sensor.PixelSizeWidth.ToString();
+                txtPixelSizeHeight.Text = _cameraModel.Sensor.PixelSizeHeight.ToString();
+                txtExposureMin.Text = _cameraModel.ExposureMin.ToString();
+                txtExposureMax.Text = _cameraModel.ExposureMax.ToString();
+
+                lbISO.Items.Clear();
+                lbISO.Items.Add(_cameraModel.Gains.Select(g => g.ToString()));
+
+                lbShutterSpeed.Items.Clear();
+                lbShutterSpeed.Items.Add(_cameraModel.ShutterSpeeds.Select(s => $"{s.Name};{s.DurationSeconds.ToString()}"));
             }
 
-            checkAutoDeleteFile.Checked = Camera.autoDeleteImageFile;
+            ToggleCameraSettings();
         }
 
         private void cbCameraModel_SelectedValueChanged(object sender, EventArgs e)
@@ -101,15 +128,28 @@ namespace ASCOM.Sony
             }
         }
 
-        private void btnManageModels_Click(object sender, EventArgs e)
+        private bool _showCustomCameraControls = false;
+
+        private void cbShowCameraSettings_CheckedChanged(object sender, EventArgs e)
         {
-            CameraModelsManagerForm dlgCameraModelsManager = new CameraModelsManagerForm();
-            dlgCameraModelsManager.Show();
-            //var dialogResult = dlgCameraModelsManager.ShowDialog();
-            //if (dialogResult == DialogResult.OK)
-            //{
-            //    //update camera model list; reset camera driver to first model if current model was deleted
-            //}
+            ToggleCameraSettings();
+        }
+
+        private void ToggleCameraSettings()
+        {
+            _showCustomCameraControls = cbShowCameraSettings.Checked;
+            pnlCustomCamera.Enabled = _showCustomCameraControls;
+            cbCameraModel.Enabled = !_showCustomCameraControls;
+        }
+
+        private void btnAddISO_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        private void btnAddShutterSpeed_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
         }
     }
 }
