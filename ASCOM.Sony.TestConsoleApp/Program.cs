@@ -15,7 +15,9 @@ namespace ASCOM.Sony.TestConsoleApp
     {
         static void Main(string[] args)
         {
-            SonyCamera camera = new SonyCamera(CameraModel.Models.First(m => m.ID == "SLTA99"), ImageFormat.CFA, false);
+            var cameraModels = JsonConvert.DeserializeObject<CameraModel[]>(File.ReadAllText("cameramodels.json"));
+
+            SonyCamera camera = new SonyCamera(cameraModels.First(m => m.ID == "SLTA99"), ImageFormat.CFA, false);
 
             camera.ExposureReady += Camera_ExposureReady;
             camera.ExposureCompleted += Camera_ExposureCompleted;
@@ -37,13 +39,13 @@ namespace ASCOM.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading RAW file to array ...");
-                    uint[,] array = dataProcessor.ReadRaw("D:\\astrophoto\\test\\DSC08256.ARW");
+                    uint[,] array = dataProcessor.ReadRaw("C:\\astrophoto\\test\\test.ARW");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength*4} bytes");
 
                     Console.Write("Saving to tiff...");
-                    SaveToGrayscaleTiff("D:\\astrophoto\\test\\grayscale.tiff", array);
+                    SaveToGrayscaleTiff("C:\\astrophoto\\test\\grayscale.tiff", array);
                     Console.WriteLine(" Done.");
                 }
                 else if(key.Key == ConsoleKey.D)
@@ -51,13 +53,13 @@ namespace ASCOM.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading RAW file and debayer to array ...");
-                    uint[,,] array = dataProcessor.ReadAndDebayerRaw("D:\\astrophoto\\test\\DSC08256.ARW");
+                    uint[,,] array = dataProcessor.ReadAndDebayerRaw("C:\\astrophoto\\test\\test.ARW");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength*4} bytes");
 
                     Console.Write("Saving to tiff...");
-                    SaveToColorTiff("D:\\astrophoto\\test\\color.tiff", array);
+                    SaveToColorTiff("C:\\astrophoto\\test\\color.tiff", array);
                     Console.WriteLine(" Done.");
                 }
                 else if (key.Key == ConsoleKey.J)
@@ -65,7 +67,7 @@ namespace ASCOM.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading JPEG file array ...");
-                    uint[,,] array = dataProcessor.ReadJpeg("D:\\astrophoto\\test\\DSC02292.JPG");
+                    uint[,,] array = dataProcessor.ReadJpeg("C:\\astrophoto\\test\\test.JPG");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength} bytes");
@@ -73,7 +75,7 @@ namespace ASCOM.Sony.TestConsoleApp
                     Console.Write("Saving to tiff...");
 
                     
-                    SaveToColor8bitTiff("D:\\astrophoto\\test\\jpeg.tiff", array);
+                    SaveToColor8bitTiff("C:\\astrophoto\\test\\jpeg.tiff", array);
                         
                     
                     Console.WriteLine(" Done.");

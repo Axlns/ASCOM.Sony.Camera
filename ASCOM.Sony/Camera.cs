@@ -512,7 +512,7 @@ namespace ASCOM.Sony
             }
         }
 
-        public unsafe object ImageArray
+        public object ImageArray
         {
             get
             {

@@ -36,7 +36,8 @@ Name: "{cf}\ASCOM\Uninstall\Camera\ASCOM.Sony.Camera"
 [Files]
 Source: "bin\ASCOM.Sony.Camera.dll"; DestDir: "{app}"; Flags: ignoreversion 
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
-Source: "bin\libraw.dll"; DestDir: "{app}"
+;Source: "bin\libraw64.dll"; DestDir: "{app}"; DestName: "libraw.dll";
+Source: "bin\libraw32.dll"; DestDir: "{app}"; DestName: "libraw.dll";
 Source: "bin\Newtonsoft.Json.dll"; DestDir: "{app}"
 Source: "bin\cameramodels.json"; DestDir: "{app}"
 ;Source: "bin\exiftool.exe"; DestDir: "{app}"
