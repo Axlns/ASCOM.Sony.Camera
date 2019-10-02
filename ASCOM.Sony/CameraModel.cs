@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using ASCOM.Utilities;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     public class ShutterSpeed
     {
@@ -20,14 +20,14 @@ namespace ASCOM.DSLR.Sony
 
     public class SensorSize
     {
-        /// <summary>
-        /// Total sensor width in pixels (including reserved sensor areas)
-        /// </summary>
-        public ushort RawWidth { get; set; }
-        /// <summary>
-        /// Total sensor height in pixels (including reserved sensor areas)
-        /// </summary>
-        public ushort RawHeight { get; set; }
+        ///// <summary>
+        ///// Total sensor width in pixels (including reserved sensor areas)
+        ///// </summary>
+        //public ushort RawWidth { get; set; }
+        ///// <summary>
+        ///// Total sensor height in pixels (including reserved sensor areas)
+        ///// </summary>
+        //public ushort RawHeight { get; set; }
 
         /// <summary>
         /// Usable sensor width in pixels
@@ -101,7 +101,7 @@ namespace ASCOM.DSLR.Sony
         public double ElectronsPerADU { get; set; }
         public double ExposureResolution { get; set; }
         public double FullWellCapacity { get; set; }
-        public bool HasShutter { get; private set; }
+
         private static CameraModel _sltA99
         {
             get
@@ -113,8 +113,8 @@ namespace ASCOM.DSLR.Sony
                     SensorName= "IMX157",
                     SensorSize = new SensorSize()
                     {
-                        RawWidth = 6048,
-                        RawHeight = 4024,
+                        //RawWidth = 6048,
+                        //RawHeight = 4024,
                         FrameWidth = 6018,
                         FrameHeight = 4024,
                         CropWidth = 6000,
@@ -172,7 +172,6 @@ namespace ASCOM.DSLR.Sony
                     },
                     ElectronsPerADU = 1,
                     ExposureResolution = 0.1,
-                    HasShutter = false,
                     FullWellCapacity = short.MaxValue
                 };
             }

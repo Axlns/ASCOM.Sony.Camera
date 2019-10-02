@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     public class ImageDataProcessor
     {
@@ -48,16 +48,16 @@ namespace ASCOM.DSLR.Sony
                 int row = rc / width;
                 int col = rc - width * row;
                 //int rowReversed = height - row - 1;
-                pixels[col, row, 0] = r;
+                pixels[col, row, 0] = b;
                 pixels[col, row, 1] = g;
-                pixels[col, row, 2] = b;
+                pixels[col, row, 2] = r;
             }
             NativeMethods.libraw_close(data);
 
             return pixels;
         }
 
-        public byte[,,] ReadJpeg(string fileName)
+        public uint[,,] ReadJpeg(string fileName)
         {
             using (Bitmap img = new Bitmap(fileName))
             {
@@ -74,12 +74,12 @@ namespace ASCOM.DSLR.Sony
         }
 
         
-        public byte[,,] ReadBitmap(Bitmap img)
+        public uint[,,] ReadBitmap(Bitmap img)
         {
             BitmapData data = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, img.PixelFormat);
             IntPtr ptr = data.Scan0;
             int bytesCount = Math.Abs(data.Stride) * img.Height;
-            var result = new byte[img.Width, img.Height, 3];
+            
 
             byte[] bytesArray = new byte[bytesCount];
             Marshal.Copy(ptr, bytesArray, 0, bytesCount);
@@ -87,6 +87,8 @@ namespace ASCOM.DSLR.Sony
 
             var width = img.Width;
             var height = img.Height;
+
+            var result = new uint[width, height, 3];
 
             for (int rc = 0; rc < width * height; rc++)
             {
@@ -98,9 +100,9 @@ namespace ASCOM.DSLR.Sony
                 int col = rc - width * row;
 
                 //var rowReversed = height - row - 1;
-                result[col, row, 0] = r;
+                result[col, row, 0] = b;
                 result[col, row, 1] = g;
-                result[col, row, 2] = b;
+                result[col, row, 2] = r;
             }
 
             return result;
@@ -178,30 +180,28 @@ namespace ASCOM.DSLR.Sony
             int xLength = data.GetLength(0);
             int yLength = data.GetLength(1);
 
-            int rank = data.Rank;
-            Array result = null;
-            result = rank == 3? Array.CreateInstance(typeof(int), xLength, yLength, 3) : Array.CreateInstance(typeof(int), xLength, yLength);
+            Array result = data.Rank == 3? Array.CreateInstance(typeof(object), xLength, yLength, 3) : Array.CreateInstance(typeof(object), xLength, yLength);
 
             for (int x = 0; x < xLength; x++)
             for (int y = 0; y < yLength; y++)
             {
-                if (rank == 3)
+                if (data.Rank == 3)
                 {
                     for (int r = 0; r < 3; r++)
                     {
-                        result.SetValue(data.GetValue(x, y, r), x, y, r);
+                        result.SetValue((object)data.GetValue(x, y, r), x, y, r);
                     }
                 }
                 else
                 {
-                    result.SetValue(data.GetValue(x, y), x, y);
+                    result.SetValue((object)data.GetValue(x, y), x, y);
                 }
             }
 
             return result;
         }
 
-        public Array CutArray(Array data, int StartX, int StartY, int NumX, int NumY, int CameraXSize, int CameraYSize)
+        public Array CutImageArray(Array data, int StartX, int StartY, int NumX, int NumY, int CameraXSize, int CameraYSize)
         {
             Array result = null;
             int rank = data.Rank;
@@ -217,8 +217,7 @@ namespace ASCOM.DSLR.Sony
                 xLength = Math.Min(xLength, NumX);
                 yLength = Math.Min(yLength, NumY);
 
-                result = rank == 3 ? (Array) new ushort[xLength, yLength, 3] 
-                                   : (Array) new ushort[xLength, yLength];
+                result = rank == 3 ? (Array) new uint[xLength, yLength, 3] : new uint[xLength, yLength];
 
                 for (int x = 0; x < xLength; x++)
                 { 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace ASCOM.DSLR.Sony.TestConsoleApp
+namespace ASCOM.Sony.TestConsoleApp
 {
     public class Program
     {
@@ -64,7 +64,7 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading JPEG file array ...");
-                    byte[,,] array = dataProcessor.ReadJpeg("D:\\astrophoto\\test\\DSC02292.JPG");
+                    uint[,,] array = dataProcessor.ReadJpeg("D:\\astrophoto\\test\\DSC02292.JPG");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength} bytes");
@@ -164,9 +164,9 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
             {
                 for (int i = 0; i < width; i ++)
                 {
-                    array[j * width*3 + i*3] = (ushort)imageArray[i, j,0];
+                    array[j * width*3 + i*3] = (ushort)imageArray[i, j,2];
                     array[j * width * 3 + i*3+1] = (ushort)imageArray[i, j, 1];
-                    array[j * width * 3 + i*3+2] = (ushort)imageArray[i, j, 2];
+                    array[j * width * 3 + i*3+2] = (ushort)imageArray[i, j, 0];
                 }
             }
 
@@ -182,7 +182,7 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
             }
         }
 
-        private static void SaveToColor8bitTiff(string filename, byte[,,] imageArray)
+        private static void SaveToColor8bitTiff(string filename, uint[,,] imageArray)
         {
             if (File.Exists(filename))
             {
@@ -198,9 +198,9 @@ namespace ASCOM.DSLR.Sony.TestConsoleApp
             {
                 for (int i = 0; i < width; i++)
                 {
-                    array[j * width * 3 + i * 3] = imageArray[i, j, 0];
-                    array[j * width * 3 + i * 3 + 1] = imageArray[i, j, 1];
-                    array[j * width * 3 + i * 3 + 2] =imageArray[i, j, 2];
+                    array[j * width * 3 + i * 3] = (byte)imageArray[i, j, 2];
+                    array[j * width * 3 + i * 3 + 1] = (byte)imageArray[i, j, 1];
+                    array[j * width * 3 + i * 3 + 2] = (byte)imageArray[i, j, 0];
                 }
             }
 

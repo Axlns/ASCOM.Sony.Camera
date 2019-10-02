@@ -37,23 +37,14 @@ using System.Collections;
 using System.Drawing;
 using System.Linq;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
-    //
-    // Your driver's DeviceID is ASCOM.DSLR.Sony.Camera
-    //
-    // The Guid attribute sets the CLSID for ASCOM.DSLR.Sony.Camera
-    // The ClassInterface/None addribute prevents an empty interface called
-    // _DSLR.Sony from being created and used as the [default] interface
-    //
-    // TODO Replace the not implemented exceptions with code to implement the function or
-    // throw the appropriate ASCOM exception.
-    //
+    
 
     /// <summary>
-    /// ASCOM Camera Driver for DSLR.Sony.
+    /// ASCOM Camera Driver for Sony Cameras
     /// </summary>
-    [Guid("b01e1eca-74a7-434b-b962-a17fe48aba61")]
+    [Guid("151bf226-53eb-4d11-9822-a56aa6ffbaec")]
     [ClassInterface(ClassInterfaceType.None)]
     public partial class Camera : ICameraV2
     {
@@ -61,12 +52,13 @@ namespace ASCOM.DSLR.Sony
         /// ASCOM DeviceID (COM ProgID) for this driver.
         /// The DeviceID is used by ASCOM applications to load the driver at runtime.
         /// </summary>
-        internal static string driverID = "ASCOM.DSLR.Sony.Camera";
-        // TODO Change the descriptive string for your driver then remove this line
+        internal static string driverID = "ASCOM.Sony.Camera";
+        
+
         /// <summary>
         /// Driver description that displays in the ASCOM Chooser.
         /// </summary>
-        private static string driverDescription = "ASCOM Sony Driver";
+        private static string driverDescription = "ASCOM Sony Camera";
 
         internal static string cameraModelProfileName = "Camera Model"; // Constants used for Profile persistence
         internal static CameraModel cameraModelDefault = CameraModel.Models.First();

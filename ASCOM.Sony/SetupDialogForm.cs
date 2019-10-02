@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using ASCOM.Utilities;
-using ASCOM.DSLR.Sony;
+using ASCOM.Sony;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     [ComVisible(false)]					// Form not registered for COM!
     public partial class SetupDialogForm : Form
@@ -99,6 +99,17 @@ namespace ASCOM.DSLR.Sony
                     cbISO.SelectedItem = selectedCameraModel.Gains.FirstOrDefault();
                 }
             }
+        }
+
+        private void btnManageModels_Click(object sender, EventArgs e)
+        {
+            CameraModelsManagerForm dlgCameraModelsManager = new CameraModelsManagerForm();
+            dlgCameraModelsManager.Show();
+            //var dialogResult = dlgCameraModelsManager.ShowDialog();
+            //if (dialogResult == DialogResult.OK)
+            //{
+            //    //update camera model list; reset camera driver to first model if current model was deleted
+            //}
         }
     }
 }

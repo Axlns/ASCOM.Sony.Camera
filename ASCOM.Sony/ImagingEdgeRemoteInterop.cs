@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     public class ExposureReadyEventArgs : EventArgs
     {

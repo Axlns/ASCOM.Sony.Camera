@@ -1,4 +1,4 @@
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     partial class SetupDialogForm
     {
@@ -44,6 +44,7 @@ namespace ASCOM.DSLR.Sony
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnManageModels = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picASCOM)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +52,7 @@ namespace ASCOM.DSLR.Sony
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(424, 204);
+            this.cmdOK.Location = new System.Drawing.Point(388, 191);
             this.cmdOK.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(88, 37);
@@ -64,7 +65,7 @@ namespace ASCOM.DSLR.Sony
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(424, 250);
+            this.cmdCancel.Location = new System.Drawing.Point(388, 237);
             this.cmdCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(88, 38);
@@ -77,8 +78,8 @@ namespace ASCOM.DSLR.Sony
             // 
             this.picASCOM.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picASCOM.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picASCOM.Image = global::ASCOM.DSLR.Sony.Properties.Resources.ASCOM;
-            this.picASCOM.Location = new System.Drawing.Point(444, 14);
+            this.picASCOM.Image = global::ASCOM.Sony.Properties.Resources.ASCOM;
+            this.picASCOM.Location = new System.Drawing.Point(415, 14);
             this.picASCOM.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.picASCOM.Name = "picASCOM";
             this.picASCOM.Size = new System.Drawing.Size(48, 56);
@@ -91,7 +92,7 @@ namespace ASCOM.DSLR.Sony
             // chkTrace
             // 
             this.chkTrace.AutoSize = true;
-            this.chkTrace.Location = new System.Drawing.Point(138, 250);
+            this.chkTrace.Location = new System.Drawing.Point(138, 227);
             this.chkTrace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkTrace.Name = "chkTrace";
             this.chkTrace.Size = new System.Drawing.Size(97, 24);
@@ -102,7 +103,7 @@ namespace ASCOM.DSLR.Sony
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 17);
+            this.label3.Location = new System.Drawing.Point(20, 20);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 20);
             this.label3.TabIndex = 9;
@@ -111,7 +112,7 @@ namespace ASCOM.DSLR.Sony
             // cbCameraModel
             // 
             this.cbCameraModel.FormattingEnabled = true;
-            this.cbCameraModel.Location = new System.Drawing.Point(138, 14);
+            this.cbCameraModel.Location = new System.Drawing.Point(138, 17);
             this.cbCameraModel.Name = "cbCameraModel";
             this.cbCameraModel.Size = new System.Drawing.Size(200, 28);
             this.cbCameraModel.TabIndex = 10;
@@ -120,7 +121,7 @@ namespace ASCOM.DSLR.Sony
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(95, 59);
+            this.label2.Location = new System.Drawing.Point(95, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 20);
             this.label2.TabIndex = 11;
@@ -129,7 +130,7 @@ namespace ASCOM.DSLR.Sony
             // cbISO
             // 
             this.cbISO.FormattingEnabled = true;
-            this.cbISO.Location = new System.Drawing.Point(138, 56);
+            this.cbISO.Location = new System.Drawing.Point(138, 51);
             this.cbISO.Name = "cbISO";
             this.cbISO.Size = new System.Drawing.Size(121, 28);
             this.cbISO.TabIndex = 12;
@@ -137,7 +138,7 @@ namespace ASCOM.DSLR.Sony
             // checkAutoDeleteFile
             // 
             this.checkAutoDeleteFile.AutoSize = true;
-            this.checkAutoDeleteFile.Location = new System.Drawing.Point(138, 218);
+            this.checkAutoDeleteFile.Location = new System.Drawing.Point(138, 195);
             this.checkAutoDeleteFile.Name = "checkAutoDeleteFile";
             this.checkAutoDeleteFile.Size = new System.Drawing.Size(189, 24);
             this.checkAutoDeleteFile.TabIndex = 13;
@@ -149,7 +150,7 @@ namespace ASCOM.DSLR.Sony
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 99);
+            this.label4.Location = new System.Drawing.Point(23, 88);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(109, 20);
             this.label4.TabIndex = 14;
@@ -158,7 +159,7 @@ namespace ASCOM.DSLR.Sony
             // cbImageFormat
             // 
             this.cbImageFormat.FormattingEnabled = true;
-            this.cbImageFormat.Location = new System.Drawing.Point(138, 96);
+            this.cbImageFormat.Location = new System.Drawing.Point(138, 85);
             this.cbImageFormat.Name = "cbImageFormat";
             this.cbImageFormat.Size = new System.Drawing.Size(121, 28);
             this.cbImageFormat.TabIndex = 15;
@@ -166,7 +167,7 @@ namespace ASCOM.DSLR.Sony
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(134, 136);
+            this.label1.Location = new System.Drawing.Point(134, 116);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(345, 20);
             this.label1.TabIndex = 16;
@@ -175,7 +176,7 @@ namespace ASCOM.DSLR.Sony
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(134, 157);
+            this.label5.Location = new System.Drawing.Point(134, 137);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(317, 20);
             this.label5.TabIndex = 17;
@@ -184,17 +185,29 @@ namespace ASCOM.DSLR.Sony
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(134, 178);
+            this.label6.Location = new System.Drawing.Point(134, 158);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(284, 20);
             this.label6.TabIndex = 18;
             this.label6.Text = "selected in Imaging Edge Remote app.";
             // 
+            // btnManageModels
+            // 
+            this.btnManageModels.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnManageModels.Location = new System.Drawing.Point(344, 17);
+            this.btnManageModels.Name = "btnManageModels";
+            this.btnManageModels.Size = new System.Drawing.Size(43, 28);
+            this.btnManageModels.TabIndex = 19;
+            this.btnManageModels.Text = "...";
+            this.btnManageModels.UseVisualStyleBackColor = true;
+            this.btnManageModels.Click += new System.EventHandler(this.btnManageModels_Click);
+            // 
             // SetupDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 308);
+            this.ClientSize = new System.Drawing.Size(489, 295);
+            this.Controls.Add(this.btnManageModels);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
@@ -216,7 +229,7 @@ namespace ASCOM.DSLR.Sony
             this.Name = "SetupDialogForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DSLR.Sony Setup";
+            this.Text = "ASCOM Sony Camera Settings";
             ((System.ComponentModel.ISupportInitialize)(this.picASCOM)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -240,5 +253,6 @@ namespace ASCOM.DSLR.Sony
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnManageModels;
     }
 }

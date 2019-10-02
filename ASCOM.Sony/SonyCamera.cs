@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     public interface ISonyCamera
     {

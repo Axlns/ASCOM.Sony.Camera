@@ -6,7 +6,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Linq;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
     public struct ExifTagItem
     {

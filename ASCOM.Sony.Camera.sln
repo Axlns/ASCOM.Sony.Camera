@@ -1,11 +1,10 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29324.140
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.DSLR.Sony", "ASCOM.DSLR.Sony\ASCOM.DSLR.Sony.csproj", "{64308775-BD4A-469C-BCAB-3ED830B811AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.Sony.Camera", "ASCOM.Sony\ASCOM.Sony.Camera.csproj", "{64308775-BD4A-469C-BCAB-3ED830B811AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.DSLR.Sony.TestConsoleApp", "ASCOM.DSLR.Sony.TestConsoleApp\ASCOM.DSLR.Sony.TestConsoleApp.csproj", "{7EB042DB-F587-4323-9ED9-645CA53E9AF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.Sony.TestConsoleApp", "ASCOM.Sony.TestConsoleApp\ASCOM.Sony.TestConsoleApp.csproj", "{7EB042DB-F587-4323-9ED9-645CA53E9AF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

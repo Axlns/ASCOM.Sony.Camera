@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
 
     [Flags]

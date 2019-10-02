@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7EB042DB-F587-4323-9ED9-645CA53E9AF2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ASCOM.DSLR.Sony.TestConsoleApp</RootNamespace>
-    <AssemblyName>ASCOM.DSLR.Sony.TestConsoleApp</AssemblyName>
+    <RootNamespace>ASCOM.Sony.TestConsoleApp</RootNamespace>
+    <AssemblyName>ASCOM.Sony.TestConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -52,9 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ASCOM.DSLR.Sony\ASCOM.DSLR.Sony.csproj">
+    <ProjectReference Include="..\ASCOM.Sony\ASCOM.Sony.Camera.csproj">
       <Project>{64308775-bd4a-469c-bcab-3ed830b811af}</Project>
-      <Name>ASCOM.DSLR.Sony</Name>
+      <Name>ASCOM.Sony.Camera</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,7 +7,7 @@ using ASCOM.Astrometry.AstroUtils;
 using ASCOM.DeviceInterface;
 using ASCOM.Utilities;
 
-namespace ASCOM.DSLR.Sony
+namespace ASCOM.Sony
 {
 
     public enum ImageFormat
@@ -31,7 +31,7 @@ namespace ASCOM.DSLR.Sony
         private CameraStates _cameraState = CameraStates.cameraIdle;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DSLR.Sony"/> class.
+        /// Initializes a new instance of the <see cref="ASCOM.Sony"/> class.
         /// Must be public for COM registration.
         /// </summary>
         public Camera()
@@ -110,9 +110,9 @@ namespace ASCOM.DSLR.Sony
             {
                 try
                 {
-                    cameraImageArray = _imageDataProcessor.CutArray(e.ImageArray, StartX, StartY, NumX, NumY, CameraXSize, CameraYSize);
-                    cameraImageReady = true;
+                    cameraImageArray = _imageDataProcessor.CutImageArray(e.ImageArray, StartX, StartY, NumX, NumY, CameraXSize, CameraYSize);
                     _cameraState = CameraStates.cameraIdle;
+                    cameraImageReady = true;
                 }
                 catch (Exception ex)
                 {
@@ -498,8 +498,8 @@ namespace ASCOM.DSLR.Sony
         {
             get
             {
-                tl.LogMessage("HasShutter Get", cameraModel.HasShutter.ToString());
-                return cameraModel.HasShutter;
+                tl.LogMessage("HasShutter Get", false.ToString());
+                return false;
             }
         }
 
