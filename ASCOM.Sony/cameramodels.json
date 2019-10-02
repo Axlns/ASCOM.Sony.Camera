@@ -1,0 +1,768 @@
+[
+  {
+    "ID": "SLTA99", //required
+    "Name": "Sony SLT-A99", //required
+    "Sensor": { //good source to get information about your camera and sensor characteristics - https://web.archive.org/web/20181005193137/http://www.sensorgen.info/
+      "Name": "IMX157AQR", //optional, can leave empty
+      "Width": 35.8, //optional, physical width of your image sensor in millimeters, google it; as of now driver not using this value so you can leave it empty
+      "Height": 23.8, //optional, physical width of your image sensor in millimeters, google it; as of now driver not using this value so you can leave it empty
+      "FrameWidth": 6018, //required - this is resolution of RAW files produced by your camera
+      "FrameHeight": 4024, //required - this is resolution of RAW files produced by your camera
+      "CropWidth": 6000, //required for JPG image format - this is resolution of JPG files produced by your camera
+      "CropHeight": 4000, //required for JPG image format - this is resolution of JPG files produced by your camera
+      "PixelSizeWidth": 5.93, //required, google it or get approximate value using formula sensor width converted to microns (multiply mm by 1000) divided by FrameWidth
+      "PixelSizeHeight": 5.93 //required, google it or get approximate value using formula sensor height converted to microns (multiply mm by 1000) divided by FrameHeight
+    },
+    "ExposureMin": 0.000125, //minimum possible exposure in seconds, just check it on your camera, for SLT-A99 its 1/8000
+    "ExposureMax": 3600.0, //maximum possible exposure in seconds, should match value specified in BULB settings in Imaging Edge Remote app here - https://prnt.sc/pds6fj
+    "Gains": [ 50, 64, 80, 100, 125, 160, 200, 250, 320, 400, 500, 640, 800, 1000, 1250, 1600, 2000, 2500, 3200, 4000, 5000, 6400, 8000, 10000, 12800, 16000, 20000, 25600 ], //list of possible ISO values for your camera
+    "ShutterSpeeds": [
+      //this is list of possible shutter speeds in seconds, each option have Name property which MUST match what you see here in Imaging Edge Remote app - https://prnt.sc/pds7ux
+      //you only need to care about small shutter speeds up to 2 seconds, for 2 seconds specify "BULB" as the Name ; for all exposures of 2 seconds or longer driver will use BULB mode
+      {
+        "DurationSeconds": 0.000125,
+        "Name": "1/8000"
+      },
+      {
+        "DurationSeconds": 0.00015625,
+        "Name": "1/6400"
+      },
+      {
+        "DurationSeconds": 0.0002,
+        "Name": "1/5000"
+      },
+      {
+        "DurationSeconds": 0.00025,
+        "Name": "1/4000"
+      },
+      {
+        "DurationSeconds": 0.0003125,
+        "Name": "1/3200"
+      },
+      {
+        "DurationSeconds": 0.0004,
+        "Name": "1/2500"
+      },
+      {
+        "DurationSeconds": 0.0005,
+        "Name": "1/2000"
+      },
+      {
+        "DurationSeconds": 0.000625,
+        "Name": "1/1600"
+      },
+      {
+        "DurationSeconds": 0.0008,
+        "Name": "1/1250"
+      },
+      {
+        "DurationSeconds": 0.001,
+        "Name": "1/1000"
+      },
+      {
+        "DurationSeconds": 0.00125,
+        "Name": "1/800"
+      },
+      {
+        "DurationSeconds": 0.0015625,
+        "Name": "1/640"
+      },
+      {
+        "DurationSeconds": 0.002,
+        "Name": "1/500"
+      },
+      {
+        "DurationSeconds": 0.0025,
+        "Name": "1/400"
+      },
+      {
+        "DurationSeconds": 0.003125,
+        "Name": "1/320"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/250"
+      },
+      {
+        "DurationSeconds": 0.005,
+        "Name": "1/200"
+      },
+      {
+        "DurationSeconds": 0.00625,
+        "Name": "1/160"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/125"
+      },
+      {
+        "DurationSeconds": 0.0125,
+        "Name": "1/80"
+      },
+      {
+        "DurationSeconds": 0.016666666666666666,
+        "Name": "1/60"
+      },
+      {
+        "DurationSeconds": 0.02,
+        "Name": "1/50"
+      },
+      {
+        "DurationSeconds": 0.025,
+        "Name": "1/40"
+      },
+      {
+        "DurationSeconds": 0.033333333333333333,
+        "Name": "1/30"
+      },
+      {
+        "DurationSeconds": 0.04,
+        "Name": "1/25"
+      },
+      {
+        "DurationSeconds": 0.05,
+        "Name": "1/20"
+      },
+      {
+        "DurationSeconds": 0.066666666666666666,
+        "Name": "1/15"
+      },
+      {
+        "DurationSeconds": 0.076923076923076927,
+        "Name": "1/13"
+      },
+      {
+        "DurationSeconds": 0.1,
+        "Name": "1/10"
+      },
+      {
+        "DurationSeconds": 0.125,
+        "Name": "1/8"
+      },
+      {
+        "DurationSeconds": 0.16666666666666666,
+        "Name": "1/6"
+      },
+      {
+        "DurationSeconds": 0.2,
+        "Name": "1/5"
+      },
+      {
+        "DurationSeconds": 0.25,
+        "Name": "1/4"
+      },
+      {
+        "DurationSeconds": 0.33333333333333331,
+        "Name": "1/3"
+      },
+      {
+        "DurationSeconds": 0.4,
+        "Name": "0.4\""
+      },
+      {
+        "DurationSeconds": 0.5,
+        "Name": "0.5\""
+      },
+      {
+        "DurationSeconds": 0.6,
+        "Name": "0.6\""
+      },
+      {
+        "DurationSeconds": 0.8,
+        "Name": "0.8\""
+      },
+      {
+        "DurationSeconds": 1.0,
+        "Name": "1\""
+      },
+      {
+        "DurationSeconds": 1.3,
+        "Name": "1.3\""
+      },
+      {
+        "DurationSeconds": 1.6,
+        "Name": "1.6\""
+      },
+      {
+        "DurationSeconds": 2.0,
+        "Name": "BULB"
+      }
+    ],
+    "ElectronsPerADU": 1.0, //not used right now, leave as 1.0
+    "ExposureResolution": 0.1, //not used right now, leave as 0.1
+    "FullWellCapacity": 32767.0 //not used right now, leave as 32767.0
+  },
+  {
+    "ID": "SLTA77",
+    "Name": "Sony SLT-A77",
+    "Sensor": {
+      "Name": "",
+      "Width": 23.5,
+      "Height": 15.6,
+      "FrameWidth": 6018,
+      "FrameHeight": 4024,
+      "CropWidth": 6000,
+      "CropHeight": 4000,
+      "PixelSizeWidth": 3.9,
+      "PixelSizeHeight": 3.9
+    },
+    "ExposureMin": 0.000125,
+    "ExposureMax": 3600.0,
+    "Gains": [ 50, 64, 80, 100, 125, 160, 200, 250, 320, 400, 500, 640, 800, 1000, 1250, 1600, 2000, 2500, 3200, 4000, 5000, 6400, 8000, 10000, 12800, 16000, 20000, 25600 ], //list of possible ISO values for your camera
+    "ShutterSpeeds": [
+      {
+        "DurationSeconds": 0.000125,
+        "Name": "1/8000"
+      },
+      {
+        "DurationSeconds": 0.00015625,
+        "Name": "1/6400"
+      },
+      {
+        "DurationSeconds": 0.0002,
+        "Name": "1/5000"
+      },
+      {
+        "DurationSeconds": 0.00025,
+        "Name": "1/4000"
+      },
+      {
+        "DurationSeconds": 0.0003125,
+        "Name": "1/3200"
+      },
+      {
+        "DurationSeconds": 0.0004,
+        "Name": "1/2500"
+      },
+      {
+        "DurationSeconds": 0.0005,
+        "Name": "1/2000"
+      },
+      {
+        "DurationSeconds": 0.000625,
+        "Name": "1/1600"
+      },
+      {
+        "DurationSeconds": 0.0008,
+        "Name": "1/1250"
+      },
+      {
+        "DurationSeconds": 0.001,
+        "Name": "1/1000"
+      },
+      {
+        "DurationSeconds": 0.00125,
+        "Name": "1/800"
+      },
+      {
+        "DurationSeconds": 0.0015625,
+        "Name": "1/640"
+      },
+      {
+        "DurationSeconds": 0.002,
+        "Name": "1/500"
+      },
+      {
+        "DurationSeconds": 0.0025,
+        "Name": "1/400"
+      },
+      {
+        "DurationSeconds": 0.003125,
+        "Name": "1/320"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/250"
+      },
+      {
+        "DurationSeconds": 0.005,
+        "Name": "1/200"
+      },
+      {
+        "DurationSeconds": 0.00625,
+        "Name": "1/160"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/125"
+      },
+      {
+        "DurationSeconds": 0.0125,
+        "Name": "1/80"
+      },
+      {
+        "DurationSeconds": 0.016666666666666666,
+        "Name": "1/60"
+      },
+      {
+        "DurationSeconds": 0.02,
+        "Name": "1/50"
+      },
+      {
+        "DurationSeconds": 0.025,
+        "Name": "1/40"
+      },
+      {
+        "DurationSeconds": 0.033333333333333333,
+        "Name": "1/30"
+      },
+      {
+        "DurationSeconds": 0.04,
+        "Name": "1/25"
+      },
+      {
+        "DurationSeconds": 0.05,
+        "Name": "1/20"
+      },
+      {
+        "DurationSeconds": 0.066666666666666666,
+        "Name": "1/15"
+      },
+      {
+        "DurationSeconds": 0.076923076923076927,
+        "Name": "1/13"
+      },
+      {
+        "DurationSeconds": 0.1,
+        "Name": "1/10"
+      },
+      {
+        "DurationSeconds": 0.125,
+        "Name": "1/8"
+      },
+      {
+        "DurationSeconds": 0.16666666666666666,
+        "Name": "1/6"
+      },
+      {
+        "DurationSeconds": 0.2,
+        "Name": "1/5"
+      },
+      {
+        "DurationSeconds": 0.25,
+        "Name": "1/4"
+      },
+      {
+        "DurationSeconds": 0.33333333333333331,
+        "Name": "1/3"
+      },
+      {
+        "DurationSeconds": 0.4,
+        "Name": "0.4\""
+      },
+      {
+        "DurationSeconds": 0.5,
+        "Name": "0.5\""
+      },
+      {
+        "DurationSeconds": 0.6,
+        "Name": "0.6\""
+      },
+      {
+        "DurationSeconds": 0.8,
+        "Name": "0.8\""
+      },
+      {
+        "DurationSeconds": 1.0,
+        "Name": "1\""
+      },
+      {
+        "DurationSeconds": 1.3,
+        "Name": "1.3\""
+      },
+      {
+        "DurationSeconds": 1.6,
+        "Name": "1.6\""
+      },
+      {
+        "DurationSeconds": 2.0,
+        "Name": "BULB"
+      }
+    ],
+    "ElectronsPerADU": 1.0,
+    "ExposureResolution": 0.1,
+    "FullWellCapacity": 32767.0
+  },
+  {
+    "ID": "SLTA77",
+    "Name": "Sony SLT-A77-II",
+    "Sensor": {
+      "Name": "",
+      "Width": 23.5,
+      "Height": 15.6,
+      "FrameWidth": 6018,
+      "FrameHeight": 4024,
+      "CropWidth": 6000,
+      "CropHeight": 4000,
+      "PixelSizeWidth": 3.9,
+      "PixelSizeHeight": 3.9
+    },
+    "ExposureMin": 0.000125,
+    "ExposureMax": 3600.0,
+    "Gains": [ 50, 64, 80, 100, 125, 160, 200, 250, 320, 400, 500, 640, 800, 1000, 1250, 1600, 2000, 2500, 3200, 4000, 5000, 6400, 8000, 10000, 12800, 16000, 20000, 25600 ], //list of possible ISO values for your camera
+    "ShutterSpeeds": [
+      {
+        "DurationSeconds": 0.000125,
+        "Name": "1/8000"
+      },
+      {
+        "DurationSeconds": 0.00015625,
+        "Name": "1/6400"
+      },
+      {
+        "DurationSeconds": 0.0002,
+        "Name": "1/5000"
+      },
+      {
+        "DurationSeconds": 0.00025,
+        "Name": "1/4000"
+      },
+      {
+        "DurationSeconds": 0.0003125,
+        "Name": "1/3200"
+      },
+      {
+        "DurationSeconds": 0.0004,
+        "Name": "1/2500"
+      },
+      {
+        "DurationSeconds": 0.0005,
+        "Name": "1/2000"
+      },
+      {
+        "DurationSeconds": 0.000625,
+        "Name": "1/1600"
+      },
+      {
+        "DurationSeconds": 0.0008,
+        "Name": "1/1250"
+      },
+      {
+        "DurationSeconds": 0.001,
+        "Name": "1/1000"
+      },
+      {
+        "DurationSeconds": 0.00125,
+        "Name": "1/800"
+      },
+      {
+        "DurationSeconds": 0.0015625,
+        "Name": "1/640"
+      },
+      {
+        "DurationSeconds": 0.002,
+        "Name": "1/500"
+      },
+      {
+        "DurationSeconds": 0.0025,
+        "Name": "1/400"
+      },
+      {
+        "DurationSeconds": 0.003125,
+        "Name": "1/320"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/250"
+      },
+      {
+        "DurationSeconds": 0.005,
+        "Name": "1/200"
+      },
+      {
+        "DurationSeconds": 0.00625,
+        "Name": "1/160"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/125"
+      },
+      {
+        "DurationSeconds": 0.0125,
+        "Name": "1/80"
+      },
+      {
+        "DurationSeconds": 0.016666666666666666,
+        "Name": "1/60"
+      },
+      {
+        "DurationSeconds": 0.02,
+        "Name": "1/50"
+      },
+      {
+        "DurationSeconds": 0.025,
+        "Name": "1/40"
+      },
+      {
+        "DurationSeconds": 0.033333333333333333,
+        "Name": "1/30"
+      },
+      {
+        "DurationSeconds": 0.04,
+        "Name": "1/25"
+      },
+      {
+        "DurationSeconds": 0.05,
+        "Name": "1/20"
+      },
+      {
+        "DurationSeconds": 0.066666666666666666,
+        "Name": "1/15"
+      },
+      {
+        "DurationSeconds": 0.076923076923076927,
+        "Name": "1/13"
+      },
+      {
+        "DurationSeconds": 0.1,
+        "Name": "1/10"
+      },
+      {
+        "DurationSeconds": 0.125,
+        "Name": "1/8"
+      },
+      {
+        "DurationSeconds": 0.16666666666666666,
+        "Name": "1/6"
+      },
+      {
+        "DurationSeconds": 0.2,
+        "Name": "1/5"
+      },
+      {
+        "DurationSeconds": 0.25,
+        "Name": "1/4"
+      },
+      {
+        "DurationSeconds": 0.33333333333333331,
+        "Name": "1/3"
+      },
+      {
+        "DurationSeconds": 0.4,
+        "Name": "0.4\""
+      },
+      {
+        "DurationSeconds": 0.5,
+        "Name": "0.5\""
+      },
+      {
+        "DurationSeconds": 0.6,
+        "Name": "0.6\""
+      },
+      {
+        "DurationSeconds": 0.8,
+        "Name": "0.8\""
+      },
+      {
+        "DurationSeconds": 1.0,
+        "Name": "1\""
+      },
+      {
+        "DurationSeconds": 1.3,
+        "Name": "1.3\""
+      },
+      {
+        "DurationSeconds": 1.6,
+        "Name": "1.6\""
+      },
+      {
+        "DurationSeconds": 2.0,
+        "Name": "BULB"
+      }
+    ],
+    "ElectronsPerADU": 1.0, //not used right now, leave as 1.0
+    "ExposureResolution": 0.1, //not used right now, leave as 0.1
+    "FullWellCapacity": 32767.0 //not used right now, leave as 32767.0
+  },
+  {
+    "ID": "A7",
+    "Name": "Sony A7",
+    "Sensor": {
+      "Name": "",
+      "Width": 35.8,
+      "Height": 23.9,
+      "FrameWidth": 6018,
+      "FrameHeight": 4024,
+      "CropWidth": 6000,
+      "CropHeight": 4000,
+      "PixelSizeWidth": 5.93,
+      "PixelSizeHeight": 5.93
+    },
+    "ExposureMin": 0.000125,
+    "ExposureMax": 3600.0,
+    "Gains": [ 50, 64, 80, 100, 125, 160, 200, 250, 320, 400, 500, 640, 800, 1000, 1250, 1600, 2000, 2500, 3200, 4000, 5000, 6400, 8000, 10000, 12800, 16000, 20000, 25600 ], //list of possible ISO values for your camera
+    "ShutterSpeeds": [
+      {
+        "DurationSeconds": 0.000125,
+        "Name": "1/8000"
+      },
+      {
+        "DurationSeconds": 0.00015625,
+        "Name": "1/6400"
+      },
+      {
+        "DurationSeconds": 0.0002,
+        "Name": "1/5000"
+      },
+      {
+        "DurationSeconds": 0.00025,
+        "Name": "1/4000"
+      },
+      {
+        "DurationSeconds": 0.0003125,
+        "Name": "1/3200"
+      },
+      {
+        "DurationSeconds": 0.0004,
+        "Name": "1/2500"
+      },
+      {
+        "DurationSeconds": 0.0005,
+        "Name": "1/2000"
+      },
+      {
+        "DurationSeconds": 0.000625,
+        "Name": "1/1600"
+      },
+      {
+        "DurationSeconds": 0.0008,
+        "Name": "1/1250"
+      },
+      {
+        "DurationSeconds": 0.001,
+        "Name": "1/1000"
+      },
+      {
+        "DurationSeconds": 0.00125,
+        "Name": "1/800"
+      },
+      {
+        "DurationSeconds": 0.0015625,
+        "Name": "1/640"
+      },
+      {
+        "DurationSeconds": 0.002,
+        "Name": "1/500"
+      },
+      {
+        "DurationSeconds": 0.0025,
+        "Name": "1/400"
+      },
+      {
+        "DurationSeconds": 0.003125,
+        "Name": "1/320"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/250"
+      },
+      {
+        "DurationSeconds": 0.005,
+        "Name": "1/200"
+      },
+      {
+        "DurationSeconds": 0.00625,
+        "Name": "1/160"
+      },
+      {
+        "DurationSeconds": 0.004,
+        "Name": "1/125"
+      },
+      {
+        "DurationSeconds": 0.0125,
+        "Name": "1/80"
+      },
+      {
+        "DurationSeconds": 0.016666666666666666,
+        "Name": "1/60"
+      },
+      {
+        "DurationSeconds": 0.02,
+        "Name": "1/50"
+      },
+      {
+        "DurationSeconds": 0.025,
+        "Name": "1/40"
+      },
+      {
+        "DurationSeconds": 0.033333333333333333,
+        "Name": "1/30"
+      },
+      {
+        "DurationSeconds": 0.04,
+        "Name": "1/25"
+      },
+      {
+        "DurationSeconds": 0.05,
+        "Name": "1/20"
+      },
+      {
+        "DurationSeconds": 0.066666666666666666,
+        "Name": "1/15"
+      },
+      {
+        "DurationSeconds": 0.076923076923076927,
+        "Name": "1/13"
+      },
+      {
+        "DurationSeconds": 0.1,
+        "Name": "1/10"
+      },
+      {
+        "DurationSeconds": 0.125,
+        "Name": "1/8"
+      },
+      {
+        "DurationSeconds": 0.16666666666666666,
+        "Name": "1/6"
+      },
+      {
+        "DurationSeconds": 0.2,
+        "Name": "1/5"
+      },
+      {
+        "DurationSeconds": 0.25,
+        "Name": "1/4"
+      },
+      {
+        "DurationSeconds": 0.33333333333333331,
+        "Name": "1/3"
+      },
+      {
+        "DurationSeconds": 0.4,
+        "Name": "0.4\""
+      },
+      {
+        "DurationSeconds": 0.5,
+        "Name": "0.5\""
+      },
+      {
+        "DurationSeconds": 0.6,
+        "Name": "0.6\""
+      },
+      {
+        "DurationSeconds": 0.8,
+        "Name": "0.8\""
+      },
+      {
+        "DurationSeconds": 1.0,
+        "Name": "1\""
+      },
+      {
+        "DurationSeconds": 1.3,
+        "Name": "1.3\""
+      },
+      {
+        "DurationSeconds": 1.6,
+        "Name": "1.6\""
+      },
+      {
+        "DurationSeconds": 2.0,
+        "Name": "BULB"
+      }
+    ],
+    "ElectronsPerADU": 1.0,
+    "ExposureResolution": 0.1,
+    "FullWellCapacity": 32767.0
+  }
+]

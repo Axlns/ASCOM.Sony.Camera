@@ -1,4 +1,4 @@
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" "./ASCOM.Sony.Camera.sln" /p:configuration=debug /property:Platform="Any CPU"
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe" "./ASCOM.Sony.Camera.sln" /p:configuration=debug /property:Platform="Any CPU" /t:Clean,Build
 powershell -NoLogo -NoProfile -Command (get-item -Path bin\ASCOM.Sony.Camera.dll).VersionInfo.FileVersion>version.txt
 set /p VERSION=<version.txt
 del version.txt

@@ -35,7 +35,10 @@ using ASCOM.DeviceInterface;
 using System.Globalization;
 using System.Collections;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json;
 
 namespace ASCOM.Sony
 {
@@ -54,14 +57,12 @@ namespace ASCOM.Sony
         /// </summary>
         internal static string driverID = "ASCOM.Sony.Camera";
         
-
         /// <summary>
         /// Driver description that displays in the ASCOM Chooser.
         /// </summary>
         private static string driverDescription = "ASCOM Sony Camera";
 
         internal static string cameraModelProfileName = "Camera Model"; // Constants used for Profile persistence
-        internal static CameraModel cameraModelDefault = CameraModel.Models.First();
 
         internal static string isoProfileName = "ISO";
 
@@ -350,14 +351,19 @@ namespace ASCOM.Sony
                 driverProfile.DeviceType = "Camera";
                 tl.Enabled = Convert.ToBoolean(driverProfile.GetValue(driverID, traceStateProfileName, string.Empty, traceStateDefault));
                 
+                DeserializeModelsFromJson();
+
                 string cameraModelID = driverProfile.GetValue(driverID, cameraModelProfileName, string.Empty, "");
+
+                var firstCameraModel = CameraModel.Models.FirstOrDefault();
+
                 if (string.IsNullOrEmpty(cameraModelID))
                 {
-                    cameraModel = cameraModelDefault;
+                    cameraModel = firstCameraModel;
                 }
                 else
                 {
-                    cameraModel = CameraModel.Models.FirstOrDefault(m => m.ID == cameraModelID) ?? cameraModelDefault;
+                    cameraModel = CameraModel.Models.FirstOrDefault(m => m.ID == cameraModelID) ?? firstCameraModel;
                 }
 
                 string isoAsString = driverProfile.GetValue(driverID, isoProfileName, string.Empty, cameraModel.Gains.First().ToString());
@@ -401,5 +407,32 @@ namespace ASCOM.Sony
             tl.LogMessage(identifier, msg);
         }
         #endregion
+
+        private static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        private static void DeserializeModelsFromJson()
+        {
+            tl.LogMessage("DeserializeModelsFromJson", "");
+
+            try
+            {
+                string jsonPath = Path.Combine(AssemblyDirectory, "cameramodels.json");
+                string jsonModels = File.ReadAllText(jsonPath);
+                CameraModel.Models = JsonConvert.DeserializeObject<CameraModel[]>(jsonModels);
+            }
+            catch (Exception e)
+            {
+                tl.LogIssue("DeserializeModelsFromJson", $"Unable to deserialize list of models. Exception: {e.ToString()} ");
+            }
+        }
     }
 }

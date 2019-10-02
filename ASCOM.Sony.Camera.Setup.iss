@@ -5,13 +5,13 @@
 [Setup]
 AppID={{d8c935d0-2caf-452b-ad6e-2ea33fee94a4}
 AppName=ASCOM Sony Camera Driver
-AppVerName=ASCOM Sony Camera Driver 0.0.1
-AppVersion=0.0.1
+AppVerName=ASCOM Sony Camera Driver {#ApplicationVersion}
+AppVersion={#ApplicationVersion}
 AppPublisher=Alexey Sobolev <sobolev@aexsoft.com>
 AppPublisherURL=mailto:sobolev@aexsoft.com
 AppSupportURL=http://tech.groups.yahoo.com/group/ASCOM-Talk/
 AppUpdatesURL=http://ascom-standards.org/
-VersionInfoVersion=0.0.1
+VersionInfoVersion={#ApplicationVersion}
 MinVersion=0,6.0
 DefaultDirName="{cf}\ASCOM\Camera\ASCOM.Sony.Camera"
 DisableDirPage=yes
@@ -37,6 +37,8 @@ Name: "{cf}\ASCOM\Uninstall\Camera\ASCOM.Sony.Camera"
 Source: "bin\ASCOM.Sony.Camera.dll"; DestDir: "{app}"; Flags: ignoreversion 
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
 Source: "bin\libraw.dll"; DestDir: "{app}"
+Source: "bin\Newtonsoft.Json.dll"; DestDir: "{app}"
+Source: "bin\cameramodels.json"; DestDir: "{app}"
 ;Source: "bin\exiftool.exe"; DestDir: "{app}"
 
 ; TODO: Add other files needed by your driver here (add subfolders above)

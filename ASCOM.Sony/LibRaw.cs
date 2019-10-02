@@ -695,8 +695,8 @@ namespace ASCOM.Sony
         uint shot_order;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] uint[] gpsdata;
         libraw_gps_info_t parsed_gps;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] char[] desc;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] char[] artist;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)] string desc;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)] string artist;
         float FlashEC;
         float FlashGN;
         float CameraTemperature;

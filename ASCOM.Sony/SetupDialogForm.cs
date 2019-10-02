@@ -86,24 +86,7 @@ namespace ASCOM.Sony
                 cbISO.Items.AddRange(Camera.cameraModel.Gains.Select(iso=>(object)iso).ToArray());
                 cbISO.SelectedItem = Camera.iso;
 
-                txtCameraModel.Text = _cameraModel.Name;
-                txtSensorName.Text = _cameraModel.Sensor.Name;
-                txtSensorSizeWidth.Text = _cameraModel.Sensor.Width.ToString();
-                txtSensorSizeHeight.Text = _cameraModel.Sensor.Height.ToString();
-                txtFrameSizeWidth.Text = _cameraModel.Sensor.FrameWidth.ToString();
-                txtFrameSizeHeight.Text = _cameraModel.Sensor.FrameHeight.ToString();
-                txtCropSizeWidth.Text = _cameraModel.Sensor.CropWidth.ToString();
-                txtCropSizeHeight.Text = _cameraModel.Sensor.CropHeight.ToString();
-                txtPixelSizeWidth.Text = _cameraModel.Sensor.PixelSizeWidth.ToString();
-                txtPixelSizeHeight.Text = _cameraModel.Sensor.PixelSizeHeight.ToString();
-                txtExposureMin.Text = _cameraModel.ExposureMin.ToString();
-                txtExposureMax.Text = _cameraModel.ExposureMax.ToString();
-
-                lbISO.Items.Clear();
-                lbISO.Items.Add(_cameraModel.Gains.Select(g => g.ToString()));
-
-                lbShutterSpeed.Items.Clear();
-                lbShutterSpeed.Items.Add(_cameraModel.ShutterSpeeds.Select(s => $"{s.Name};{s.DurationSeconds.ToString()}"));
+                
             }
 
             ToggleCameraSettings();
@@ -126,6 +109,8 @@ namespace ASCOM.Sony
                     cbISO.SelectedItem = selectedCameraModel.Gains.FirstOrDefault();
                 }
             }
+
+            PopulateCameraSettings(selectedCameraModel);
         }
 
         private bool _showCustomCameraControls = false;
@@ -140,6 +125,48 @@ namespace ASCOM.Sony
             _showCustomCameraControls = cbShowCameraSettings.Checked;
             pnlCustomCamera.Enabled = _showCustomCameraControls;
             cbCameraModel.Enabled = !_showCustomCameraControls;
+        }
+
+        private void PopulateCameraSettings(CameraModel cameraModel)
+        {
+            if (cameraModel != null)
+            {
+                txtCameraModel.Text = cameraModel.Name;
+                txtSensorName.Text = cameraModel.Sensor.Name;
+                txtSensorSizeWidth.Text = cameraModel.Sensor.Width.ToString();
+                txtSensorSizeHeight.Text = cameraModel.Sensor.Height.ToString();
+                txtFrameSizeWidth.Text = cameraModel.Sensor.FrameWidth.ToString();
+                txtFrameSizeHeight.Text = cameraModel.Sensor.FrameHeight.ToString();
+                txtCropSizeWidth.Text = cameraModel.Sensor.CropWidth.ToString();
+                txtCropSizeHeight.Text = cameraModel.Sensor.CropHeight.ToString();
+                txtPixelSizeWidth.Text = cameraModel.Sensor.PixelSizeWidth.ToString();
+                txtPixelSizeHeight.Text = cameraModel.Sensor.PixelSizeHeight.ToString();
+                txtExposureMin.Text = cameraModel.ExposureMin.ToString();
+                txtExposureMax.Text = cameraModel.ExposureMax.ToString();
+
+                lbISO.Items.Clear();
+                lbISO.Items.AddRange(new ListBox.ObjectCollection(lbISO, cameraModel.Gains.OrderBy(g => g).Select(g => (object)g.ToString()).ToArray()));
+
+                lbShutterSpeed.Items.Clear();
+                lbShutterSpeed.Items.AddRange(new ListBox.ObjectCollection(lbShutterSpeed, cameraModel.ShutterSpeeds.OrderBy(s => s.DurationSeconds).Select(s => (object)$"{s.Name};{s.DurationSeconds.ToString()}").ToArray()));
+            }
+            else
+            {
+                txtCameraModel.Text = string.Empty;
+                txtSensorName.Text = string.Empty;
+                txtSensorSizeWidth.Text = string.Empty;
+                txtSensorSizeHeight.Text = string.Empty;
+                txtFrameSizeWidth.Text = string.Empty;
+                txtFrameSizeHeight.Text = string.Empty;
+                txtCropSizeWidth.Text = string.Empty;
+                txtCropSizeHeight.Text = string.Empty;
+                txtPixelSizeWidth.Text = string.Empty;
+                txtPixelSizeHeight.Text = string.Empty;
+                txtExposureMin.Text = string.Empty;
+                txtExposureMax.Text = string.Empty;
+                lbISO.Items.Clear();
+                lbShutterSpeed.Items.Clear();
+            }
         }
 
         private void btnAddISO_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
