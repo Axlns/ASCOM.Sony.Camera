@@ -135,6 +135,8 @@
             this.chkTrace.Size = new System.Drawing.Size(87, 21);
             this.chkTrace.TabIndex = 6;
             this.chkTrace.Text = "Trace on";
+            this.toolTip1.SetToolTip(this.chkTrace, "Only check this if you need to diagnose problems with driver, as it affects perfo" +
+        "rmance");
             this.chkTrace.UseVisualStyleBackColor = true;
             // 
             // label3

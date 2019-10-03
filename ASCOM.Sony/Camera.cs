@@ -110,6 +110,15 @@ namespace ASCOM.Sony
             {
                 try
                 {
+                    //report stats to log (if tracing enabled)
+                    if (tl.Enabled)
+                    {
+                        var stats = _imageDataProcessor.GetImageStatistics(e.ImageArray);
+                        if (stats != null)
+                        {
+                            tl.LogMessage("_sonyCamera_ExposureReady", $"Image statistics: ADU min/max/mean/median: {stats.MinADU}/{stats.MaxADU}/{stats.MeanADU}/{stats.MedianADU}.");
+                        }
+                    }
                     cameraImageArray = _imageDataProcessor.CutImageArray(e.ImageArray, StartX, StartY, NumX, NumY, CameraXSize, CameraYSize);
                     _cameraState = CameraStates.cameraIdle;
                     cameraImageReady = true;
@@ -395,8 +404,8 @@ namespace ASCOM.Sony
         {
             get
             {
-                tl.LogMessage("ElectronsPerADU Get", cameraModel.ElectronsPerADU.ToString());
-                return cameraModel.ElectronsPerADU;
+                tl.LogMessage("ElectronsPerADU Get", cameraModel.Sensor.ElectronsPerADU.ToString());
+                return cameraModel.Sensor.ElectronsPerADU;
             }
         }
 
@@ -447,8 +456,8 @@ namespace ASCOM.Sony
         {
             get
             {
-                tl.LogMessage("FullWellCapacity Get", cameraModel.FullWellCapacity.ToString());
-                return cameraModel.FullWellCapacity;
+                tl.LogMessage("FullWellCapacity Get", cameraModel.Sensor.FullWellCapacity.ToString());
+                return cameraModel.Sensor.FullWellCapacity;
             }
         }
 
@@ -591,14 +600,15 @@ namespace ASCOM.Sony
         {
             get
             {
-                int maxADU = short.MaxValue;
-                tl.LogMessage("MaxADU Get", maxADU.ToString());
-
+                int maxADU;
+                
                 switch (imageFormat)
                 {
                     case ImageFormat.CFA:
-                    case ImageFormat.Debayered:
-                        maxADU = short.MaxValue;
+                        maxADU = cameraModel.Sensor.MaxADU;
+                        break;
+                    case ImageFormat.Debayered: //note: we dont use sensor characteristic here because we use LibRaw to debayer RAW image and it is doing lot of things with the file, including I believe expanding color values to full 16bit
+                        maxADU = ushort.MaxValue;
                         break;
                     case ImageFormat.JPG:
                         maxADU = byte.MaxValue;
@@ -606,7 +616,7 @@ namespace ASCOM.Sony
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-
+                tl.LogMessage("MaxADU Get", maxADU.ToString());
                 return maxADU;
             }
         }

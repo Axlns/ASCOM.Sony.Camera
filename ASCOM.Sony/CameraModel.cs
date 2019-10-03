@@ -72,6 +72,12 @@ namespace ASCOM.Sony
         public double PixelSizeWidth { get; set; }
         public double PixelSizeHeight { get; set; }
 
+        public int MaxADU { get; set; }
+
+        public double ElectronsPerADU { get; set; }
+
+        public double FullWellCapacity { get; set; }
+
         public ushort GetReadoutWidth(ImageFormat imageFormat)
         {
             switch (imageFormat)
@@ -99,7 +105,6 @@ namespace ASCOM.Sony
                     throw new ArgumentOutOfRangeException(nameof(imageFormat), imageFormat, null);
             }
         }
-
     }
 
     public class CameraModel
@@ -117,9 +122,9 @@ namespace ASCOM.Sony
 
         public ShutterSpeed[] ShutterSpeeds { get; set; }
         
-        public double ElectronsPerADU { get; set; }
+        
         public double ExposureResolution { get; set; }
-        public double FullWellCapacity { get; set; }
+        
         
         public static CameraModel[] Models { get; set; }
     }

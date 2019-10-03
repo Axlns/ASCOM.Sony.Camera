@@ -11,7 +11,10 @@
       "CropWidth": 6000, //required for JPG image format - this is resolution of JPG files produced by your camera
       "CropHeight": 4000, //required for JPG image format - this is resolution of JPG files produced by your camera
       "PixelSizeWidth": 5.93, //required, google it or get approximate value using formula sensor width converted to microns (multiply mm by 1000) divided by FrameWidth
-      "PixelSizeHeight": 5.93 //required, google it or get approximate value using formula sensor height converted to microns (multiply mm by 1000) divided by FrameHeight
+      "PixelSizeHeight": 5.93, //required, google it or get approximate value using formula sensor height converted to microns (multiply mm by 1000) divided by FrameHeight
+      "MaxADU": 16383, //14bit sensor 
+      "ElectronsPerADU": 1.0, //not used right now, leave as 1.0
+      "FullWellCapacity": 32767.0 //not used right now, leave as 32767.0
     },
     "ExposureMin": 0.000125, //minimum possible exposure in seconds, just check it on your camera, for SLT-A99 its 1/8000
     "ExposureMax": 3600.0, //maximum possible exposure in seconds, should match value specified in BULB settings in Imaging Edge Remote app here - https://prnt.sc/pds6fj
@@ -188,9 +191,8 @@
         "Name": "BULB"
       }
     ],
-    "ElectronsPerADU": 1.0, //not used right now, leave as 1.0
-    "ExposureResolution": 0.1, //not used right now, leave as 0.1
-    "FullWellCapacity": 32767.0 //not used right now, leave as 32767.0
+    "ExposureResolution": 0.1 //not used right now, leave as 0.1
+    
   },
   {
     "ID": "SLTA77",
@@ -204,7 +206,10 @@
       "CropWidth": 6000,
       "CropHeight": 4000,
       "PixelSizeWidth": 3.9,
-      "PixelSizeHeight": 3.9
+      "PixelSizeHeight": 3.9,
+      "MaxADU": 16383,
+      "ElectronsPerADU": 1.0,
+      "FullWellCapacity": 32767.0
     },
     "ExposureMin": 0.000125,
     "ExposureMax": 3600.0,
@@ -379,9 +384,7 @@
         "Name": "BULB"
       }
     ],
-    "ElectronsPerADU": 1.0,
-    "ExposureResolution": 0.1,
-    "FullWellCapacity": 32767.0
+    "ExposureResolution": 0.1
   },
   {
     "ID": "SLTA77",
@@ -586,7 +589,10 @@
       "CropWidth": 6000,
       "CropHeight": 4000,
       "PixelSizeWidth": 5.93,
-      "PixelSizeHeight": 5.93
+      "PixelSizeHeight": 5.93,
+      "MaxADU": 16383,
+      "ElectronsPerADU": 1.0,
+      "FullWellCapacity": 32767.0
     },
     "ExposureMin": 0.000125,
     "ExposureMax": 3600.0,
@@ -761,8 +767,6 @@
         "Name": "BULB"
       }
     ],
-    "ElectronsPerADU": 1.0,
-    "ExposureResolution": 0.1,
-    "FullWellCapacity": 32767.0
+    "ExposureResolution": 0.1
   }
 ]

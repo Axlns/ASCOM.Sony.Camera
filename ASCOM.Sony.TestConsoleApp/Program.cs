@@ -39,13 +39,15 @@ namespace ASCOM.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading RAW file to array ...");
-                    uint[,] array = dataProcessor.ReadRaw("C:\\astrophoto\\test\\test.ARW");
+                    uint[,] array = dataProcessor.ReadRaw("D:\\astrophoto\\test\\test.ARW");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength*4} bytes");
 
+                    WriteImageStatistics(dataProcessor, array);
+
                     Console.Write("Saving to tiff...");
-                    SaveToGrayscaleTiff("C:\\astrophoto\\test\\grayscale.tiff", array);
+                    SaveToGrayscaleTiff("D:\\astrophoto\\test\\grayscale.tiff", array);
                     Console.WriteLine(" Done.");
                 }
                 else if(key.Key == ConsoleKey.D)
@@ -53,13 +55,15 @@ namespace ASCOM.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading RAW file and debayer to array ...");
-                    uint[,,] array = dataProcessor.ReadAndDebayerRaw("C:\\astrophoto\\test\\test.ARW");
+                    uint[,,] array = dataProcessor.ReadAndDebayerRaw("D:\\astrophoto\\test\\test.ARW");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength*4} bytes");
 
+                    WriteImageStatistics(dataProcessor, array);
+
                     Console.Write("Saving to tiff...");
-                    SaveToColorTiff("C:\\astrophoto\\test\\color.tiff", array);
+                    SaveToColorTiff("D:\\astrophoto\\test\\color.tiff", array);
                     Console.WriteLine(" Done.");
                 }
                 else if (key.Key == ConsoleKey.J)
@@ -67,15 +71,16 @@ namespace ASCOM.Sony.TestConsoleApp
                     ImageDataProcessor dataProcessor = new ImageDataProcessor();
 
                     Console.Write("Reading JPEG file array ...");
-                    uint[,,] array = dataProcessor.ReadJpeg("C:\\astrophoto\\test\\test.JPG");
+                    uint[,,] array = dataProcessor.ReadJpeg("D:\\astrophoto\\test\\test.JPG");
                     Console.WriteLine(" Done.");
 
                     Console.WriteLine($"Array length: {array.LongLength} bytes");
 
+                    WriteImageStatistics(dataProcessor, array);
+
                     Console.Write("Saving to tiff...");
 
-                    
-                    SaveToColor8bitTiff("C:\\astrophoto\\test\\jpeg.tiff", array);
+                    SaveToColor8bitTiff("D:\\astrophoto\\test\\jpeg.tiff", array);
                         
                     
                     Console.WriteLine(" Done.");
@@ -104,6 +109,20 @@ namespace ASCOM.Sony.TestConsoleApp
                     break;
                 }
             } while (true);
+        }
+
+        private static void WriteImageStatistics(ImageDataProcessor dataProcessor, Array array)
+        {
+            var stats = dataProcessor.GetImageStatistics(array);
+            if (stats != null)
+            {
+                Console.WriteLine(
+                    $"Image statistics: ADU min/max/mean/median: {stats.MinADU}/{stats.MaxADU}/{stats.MeanADU}/{stats.MedianADU}.");
+            }
+            else
+            {
+                Console.WriteLine("Image statistics not available.");
+            }
         }
 
         private static void Camera_ExposureCompleted(object sender, ExposureCompletedEventArgs e)
@@ -255,7 +274,10 @@ namespace ASCOM.Sony.TestConsoleApp
                 PixelSizeWidth = 5.93,
                 PixelSizeHeight = 5.93,
                 Width = 35.8,
-                Height = 23.8
+                Height = 23.8,
+                MaxADU = 16383,
+                ElectronsPerADU = 1.0,
+                FullWellCapacity = 32767.0,
             },
             ExposureMin = 1.0 / 8000,
             ExposureMax = 3600,
@@ -305,9 +327,7 @@ namespace ASCOM.Sony.TestConsoleApp
                 new ShutterSpeed("1.6\"", durationSeconds:1.6),
                 new ShutterSpeed("BULB", durationSeconds:2),
             },
-            ElectronsPerADU = 1,
-            ExposureResolution = 0.1,
-            FullWellCapacity = short.MaxValue
+            ExposureResolution = 0.1
         };
     }
 }
