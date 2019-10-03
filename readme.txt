@@ -3,17 +3,16 @@ This driver will make your Sony camera ASCOM compatible.
 To make sure everything works correctly follow these steps:
 
 1)	Install latest version of ASCOM Platform
-2)	Install Visual C++ Redistributable Packages for Visual Studio 2013, you can download it from here - https://www.microsoft.com/en-us/download/details.aspx?id=40784 , you need x86 version
-3)	Set your camera USB Connection settings to PC remote
-4)	Connect your camera to computer using USB cable
-5)	Run Sony Imaging Edge Remote app, select your camera and make sure the app connected to your camera successfully. Enable this BULB mode settings here - https://prnt.sc/pds6fj
-6)	Select ASCOM Sony Camera driver in your app
-7)	Set settings for your camera in ASCOM driver settings dialog.
+2)	Set your camera USB Connection settings to PC remote
+3)	Connect your camera to computer using USB cable
+4)	Run Sony Imaging Edge Remote app, select your camera and make sure the app connected to your camera successfully. Enable this BULB mode settings here - https://prnt.sc/pds6fj
+5)	Select ASCOM Sony Camera driver in your app
+6)	Set settings for your camera in ASCOM driver settings dialog.
 	i)	Make sure you selected your camera model, default ISO settings and Image Format
 	ii)	If your camera model is not in the list you still can try to use the driver with your camera, you would need to edit cameramodel.json file located in C:\Program Files (x86)\Common Files\ASCOM\Camera\ASCOM.Sony.Camera, the file is commented and it should clear how to add new camera models
 	iii)Driver will try to set automatically exposure time and ISO settings in Imaging Edge Remote app, but it cannot set File Format settings matching your selected Image Format. 
 		Therefore make sure that Image Format in driver settings matching File Format in Imaging Edge Remote app. Select RAW file format for CFA and Debayered image formats, and select JPEG for JPG image format
-8) Now you can try to use your camera with ASCOM compatible imaging app, such as SharpCap or Sequence Generator Pro
+7) Now you can try to use your camera with ASCOM compatible imaging app, such as SharpCap or Sequence Generator Pro
 
 
 If you have issues using this driver - please post detailed description of the probem as well as driver log on cloudynights.com here - https://www.cloudynights.com/topic/678666-ascom-driver-for-sony-cameras/

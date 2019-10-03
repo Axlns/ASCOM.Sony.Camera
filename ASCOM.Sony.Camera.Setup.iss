@@ -35,21 +35,24 @@ Name: "{cf}\ASCOM\Uninstall\Camera\ASCOM.Sony.Camera"
 
 [Files]
 Source: "bin\ASCOM.Sony.Camera.dll"; DestDir: "{app}"; Flags: ignoreversion 
-Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
-;Source: "bin\libraw64.dll"; DestDir: "{app}"; DestName: "libraw.dll";
-Source: "bin\libraw32.dll"; DestDir: "{app}"; DestName: "libraw.dll";
 Source: "bin\Newtonsoft.Json.dll"; DestDir: "{app}"
 Source: "bin\cameramodels.json"; DestDir: "{app}"
+Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
+Source: "libraw32.dll"; DestDir: "{app}"; DestName: "libraw.dll";
+Source: "vcredist_x86.exe"; DestDir: {tmp}; Flags: deleteafterinstall
+;Source: "bin\libraw64.dll"; DestDir: "{app}"; DestName: "libraw.dll";
 ;Source: "bin\exiftool.exe"; DestDir: "{app}"
 
 ; TODO: Add other files needed by your driver here (add subfolders above)
-
 
 ; Only if driver is .NET
 [Run]
 ; Only for .NET assembly/in-proc drivers
 Filename: "{dotnet4032}\regasm.exe"; Parameters: "/codebase ""{app}\ASCOM.Sony.Camera.dll"""; Flags: runhidden 32bit
 Filename: "{dotnet4064}\regasm.exe"; Parameters: "/codebase ""{app}\ASCOM.Sony.Camera.dll"""; Flags: runhidden 64bit; Check: IsWin64
+Filename: {tmp}\vcredist_x86.exe; \
+    Parameters: "/q /passive /Q:a /c:""msiexec /q /i vcredist.msi"""; \
+    StatusMsg: "Installing VC++ 2013 Redistributables..."
 
 ; Only if driver is .NET
 [UninstallRun]
