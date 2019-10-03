@@ -278,6 +278,14 @@ namespace ASCOM.Sony
         {
             get
             {
+                //normally we should throw  ASCOM.PropertyNotImplementedException because we cannot control sensor temperature; but some apps seems to try to read that value and do not work correctly if they cant (example NINA)
+                //so as workaround user can set fixed temperature in cameramodel.JSON file
+
+                if (cameraModel.Sensor.CCDTemperature.HasValue)
+                {
+                   return cameraModel.Sensor.CCDTemperature.Value;
+                }
+                
                 tl.LogMessage("CCDTemperature Get Get", "Not implemented");
                 throw new ASCOM.PropertyNotImplementedException("CCDTemperature", false);
             }

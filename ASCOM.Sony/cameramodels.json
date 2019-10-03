@@ -14,7 +14,8 @@
       "PixelSizeHeight": 5.93, //required, google it or get approximate value using formula sensor height converted to microns (multiply mm by 1000) divided by FrameHeight
       "MaxADU": 16383, //14bit sensor 
       "ElectronsPerADU": 1.0, //not used right now, leave as 1.0
-      "FullWellCapacity": 32767.0 //not used right now, leave as 32767.0
+      "FullWellCapacity": 32767.0, //not used right now, leave as 32767.0
+      "CCDTemperature": null //some apps do not follow ASCOM Camera suggested implementation and tries to read CCDTemperature even if CanSetCCDTemperature is false ; if you have this issue try to set this to 0
     },
     "ExposureMin": 0.000125, //minimum possible exposure in seconds, just check it on your camera, for SLT-A99 its 1/8000
     "ExposureMax": 3600.0, //maximum possible exposure in seconds, should match value specified in BULB settings in Imaging Edge Remote app here - https://prnt.sc/pds6fj
@@ -192,7 +193,6 @@
       }
     ],
     "ExposureResolution": 0.1 //not used right now, leave as 0.1
-    
   },
   {
     "ID": "SLTA77",
@@ -209,7 +209,8 @@
       "PixelSizeHeight": 3.9,
       "MaxADU": 16383,
       "ElectronsPerADU": 1.0,
-      "FullWellCapacity": 32767.0
+      "FullWellCapacity": 32767.0,
+      "CCDTemperature": null
     },
     "ExposureMin": 0.000125,
     "ExposureMax": 3600.0,
@@ -387,7 +388,7 @@
     "ExposureResolution": 0.1
   },
   {
-    "ID": "SLTA77",
+    "ID": "SLTA77II",
     "Name": "Sony SLT-A77-II",
     "Sensor": {
       "Name": "",
@@ -398,7 +399,11 @@
       "CropWidth": 6000,
       "CropHeight": 4000,
       "PixelSizeWidth": 3.9,
-      "PixelSizeHeight": 3.9
+      "PixelSizeHeight": 3.9,
+      "MaxADU": 16383,
+      "ElectronsPerADU": 1.0,
+      "FullWellCapacity": 32767.0,
+      "CCDTemperature": null
     },
     "ExposureMin": 0.000125,
     "ExposureMax": 3600.0,
@@ -572,10 +577,7 @@
         "DurationSeconds": 2.0,
         "Name": "BULB"
       }
-    ],
-    "ElectronsPerADU": 1.0, //not used right now, leave as 1.0
-    "ExposureResolution": 0.1, //not used right now, leave as 0.1
-    "FullWellCapacity": 32767.0 //not used right now, leave as 32767.0
+    ]
   },
   {
     "ID": "A7",
@@ -592,7 +594,8 @@
       "PixelSizeHeight": 5.93,
       "MaxADU": 16383,
       "ElectronsPerADU": 1.0,
-      "FullWellCapacity": 32767.0
+      "FullWellCapacity": 32767.0,
+      "CCDTemperature": 0 
     },
     "ExposureMin": 0.000125,
     "ExposureMax": 3600.0,

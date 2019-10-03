@@ -78,6 +78,8 @@ namespace ASCOM.Sony
 
         public double FullWellCapacity { get; set; }
 
+        public double? CCDTemperature { get; set; }
+
         public ushort GetReadoutWidth(ImageFormat imageFormat)
         {
             switch (imageFormat)
