@@ -141,10 +141,10 @@ namespace ASCOM.Sony
 
                 while (CanAccessFile(filePath) == false)
                 {
-                    //wait
+                    Thread.Sleep(500);
                 }
 
-                Thread.Sleep(1000);//for some reason we need to wait here for file lock to be released on image file
+                Thread.Sleep(5000);//for some reason we need to wait here for file lock to be released on image file
 
                 Array imageArray = ReadCameraImageArray(filePath);
 
@@ -161,7 +161,7 @@ namespace ASCOM.Sony
         {
             try
             {
-                using (var fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.None))
+                using (var fs = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                 {
                     fs.Close();
                     return true;

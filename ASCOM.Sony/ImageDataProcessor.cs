@@ -307,6 +307,7 @@ namespace ASCOM.Sony
 
             CheckError(NativeMethods.libraw_open_file(data, fileName), "open file");
             CheckError(NativeMethods.libraw_unpack(data), "unpack");
+            
 
             return data;
         }
