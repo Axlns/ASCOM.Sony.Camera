@@ -141,10 +141,10 @@ namespace ASCOM.Sony
 
                 while (CanAccessFile(filePath) == false)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                 }
 
-                Thread.Sleep(5000);//for some reason we need to wait here for file lock to be released on image file
+                Thread.Sleep(1000);//for some reason we need to wait here for file lock to be released on image file
 
                 Array imageArray = ReadCameraImageArray(filePath);
 
@@ -163,8 +163,9 @@ namespace ASCOM.Sony
             {
                 using (var fs = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                 {
+                    long length = fs.Length;
                     fs.Close();
-                    return true;
+                    return length>0;
                 }
             }
             catch (IOException)
@@ -341,7 +342,7 @@ namespace ASCOM.Sony
             }
             catch (Exception e)
             {
-                throw new ASCOM.NotConnectedException("Unable to communicate with Imaging Edge Remote app. Ensure the app is running and camera is connected.");
+                throw new ASCOM.NotConnectedException("Unable to communicate with Imaging Edge Remote app. Ensure the app is running and camera is connected.", e);
             }
 
             IsConnected = true;

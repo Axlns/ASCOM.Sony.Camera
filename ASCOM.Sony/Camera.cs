@@ -196,6 +196,7 @@ namespace ASCOM.Sony
                     catch (Exception e)
                     {
                         connectedState = false;
+                        LogMessage("Connected Set", $"Connection failed. Reason: {e}");
                         throw new ASCOM.NotConnectedException(e);
                     }
                 }
